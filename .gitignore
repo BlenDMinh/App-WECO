@@ -71,7 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 
-/Library/*
-/Logs/*
-/Packages/*
-/ProjectSettings/*
+/Library/**
+/Logs/**
+/Packages/**
+/ProjectSettings/**
