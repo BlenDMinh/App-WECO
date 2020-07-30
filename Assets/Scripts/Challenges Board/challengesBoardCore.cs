@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class challengesBoardCore : MonoBehaviour {
-
-    private float screenScaling = Screen.height / 10;
     
     public Button challengeButton;
     public Transform buttonParent;
+    public RectTransform challengesContent;
     void Start() {
-        Debug.Log(screenScaling);
-        float curY = 450 / screenScaling;
+        float curY = 665 * buttonParent.parent.parent.transform.localScale.y;
 
         //Read all challenges in to List<Challenge> challenge
         List<Challenge> challenge = new List<Challenge>();
@@ -20,13 +18,15 @@ public class challengesBoardCore : MonoBehaviour {
         foreach(string path in challengeFilePath)
             challenge.Add(JsonUtility.FromJson<Challenge>(new StreamReader(path).ReadToEnd()));
 
-        foreach(Challenge c in challenge) {
-            curY -= 1;
-            Button button = Instantiate(challengeButton);
+        challengesContent.sizeDelta = new Vector2(challengesContent.rect.width, System.Math.Abs(665 - 300 * challenge.Count - (365 + 150)) + 150);
+
+        foreach (Challenge c in challenge) {
+            curY -= 300 * buttonParent.parent.parent.transform.localScale.y;
+            Button button = Instantiate(challengeButton, buttonParent);
             button.transform.SetParent(buttonParent);
-            button.transform.localScale = new Vector2(1, 1);
             button.transform.position = new Vector2(0, curY);
         }
+        
     }
     void Update() {
         
