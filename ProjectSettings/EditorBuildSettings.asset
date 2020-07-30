@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Submit.unity
     guid: f3b55166c98bfa141a3e816b14dad289
+  - enabled: 1
+    path: Assets/Scenes/Challenge.unity
+    guid: 9afe474cca1dbed4880eff5720f698b8
   m_configObjects: {}

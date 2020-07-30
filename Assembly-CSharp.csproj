@@ -66,10 +66,9 @@
     <Compile Include="Assets\API\Challenge.cs" />
     <Compile Include="Assets\API\Reward.cs" />
     <Compile Include="Assets\API\Task.cs" />
+    <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
     <Compile Include="Assets\Scripts\Challenge\challengeCore.cs" />
-    <Compile Include="Assets\Scripts\Challenges Board\challengesBoardCore.cs" />
     <Compile Include="Assets\Scripts\toScene.cs" />
-    <None Include="Assets\Challenges\aaaaa.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Projects/App WECO/App WECO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
