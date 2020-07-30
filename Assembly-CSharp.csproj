@@ -42,6 +42,7 @@
      <Compile Include="Assets\Scripts\Challenge\challengeCore.cs" />
      <Compile Include="Assets\API\Reward.cs" />
      <Compile Include="Assets\API\Challenge.cs" />
+     <Compile Include="Assets\API\UserData.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
