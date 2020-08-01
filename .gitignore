@@ -86,5 +86,6 @@ Library/SceneVisibilityState.asset
 Library/CurrentLayout-default.dwlt
 Library/CurrentLayout-default.dwlt
 *.dwlt
-App-WECO.sublime-project
-App-WECO.sublime-workspace
+Library/shadercompiler-UnityShaderCompiler.exe0.log
+Library/shadercompiler-UnityShaderCompiler.exe1.log
+Library/shadercompiler-UnityShaderCompiler.exe2.log
