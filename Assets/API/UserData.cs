@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,5 +9,5 @@ public class UserData
     public static bool isEmptyUserJournal;
     public static int currentChallenge;
     public static int plasticBagAmountUsage;
-
+   	
 }
