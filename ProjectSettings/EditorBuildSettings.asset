@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Challenge.unity
     guid: 9afe474cca1dbed4880eff5720f698b8
+  - enabled: 1
+    path: Assets/Scenes/Challenge Board.unity
+    guid: 10effd64090b65245b624f0af22573fa
+  - enabled: 1
+    path: Assets/Scenes/Journal.unity
+    guid: a55e53b3f27023a4a9540b8373d3fc65
   m_configObjects: {}
