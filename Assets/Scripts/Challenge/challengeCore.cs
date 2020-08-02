@@ -19,8 +19,6 @@ public class challengeCore : MonoBehaviour {
 
         //request challenge from server
 
-        //request challenge from server
-
         challenge = ReadChallenge();
 
         challengeName.text = challenge.challengeName;

@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class TestSaveJournal : MonoBehaviour
 {
-    // This event use for button click
-    public Text testTextBox;
-    private GameObject obj;
-
-    public void Button_Click_SetText()
+    // Everything relate to save journal
+    // This script is approached to 
+    // JournalField object (Unity) = journalInput (code)
+    public Text journalInput;
+    public void ButtonClick_SaveJournal()
     {
-        
+        UserData data = new UserData();
+        data.SaveUserJournal(journalInput.text);
     }
 }
