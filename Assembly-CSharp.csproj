@@ -51,6 +51,7 @@
      <Compile Include="Assets\API\UserData.cs" />
      <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
      <Compile Include="Assets\Scripts\Challenge\challengeCore.cs" />
+     <Compile Include="Assets\Scripts\Journal\SaveJournalText.cs" />
      <Compile Include="Assets\Scripts\Journal\TestSaveJournal.cs" />
      <Compile Include="Assets\Scripts\toScene.cs" />
  <Reference Include="Unity.Timeline.Editor">
