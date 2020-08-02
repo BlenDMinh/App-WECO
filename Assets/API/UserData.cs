@@ -9,7 +9,6 @@ public class UserData
     public string userName;
     public bool isEmptyUserJournal;
     public int currentChallenge;
-    public int plasticBagAmountUsage;
     public string usersJournal;
     private FileStream userDataJsonFile;
     public UserData LoadUserData()
