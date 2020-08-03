@@ -70,7 +70,8 @@
     <Compile Include="Assets\API\UserData.cs" />
     <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
     <Compile Include="Assets\Scripts\Journal\SaveJournalText.cs" />
-    <Compile Include="Assets\Scripts\Journey\challengeCore.cs" />
+    <Compile Include="Assets\Scripts\Journey\journeyCore.cs" />
+    <Compile Include="Assets\Scripts\Progress\progressCore.cs" />
     <Compile Include="Assets\Scripts\toScene.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Projects/App WECO/App WECO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

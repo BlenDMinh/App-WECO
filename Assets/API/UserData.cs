@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -8,7 +7,7 @@ public class UserData {
     public string userName;
     public bool isEmptyUserJournal;
     public int currentChallenge;
-    public List<DailyRecord> record;
+    public SortedDictionary<string, List<DailyRecord>> record;
     public string usersJournal;
 
     private FileStream userDataJsonFile;
