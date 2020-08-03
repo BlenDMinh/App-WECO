@@ -13,7 +13,7 @@ public class journeyCore : MonoBehaviour {
 
         //request challenge from server
 
-        challenge = Challenge.ReadCurrentChallenge();
+        challenge = challenge.ReadCurrentChallenge();
 
         challengeName.text = challenge.challengeName;
         challengeDes.text = challenge.challengeDescription;
