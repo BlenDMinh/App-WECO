@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class UserData
-{
+public class UserData {
     public bool isNHH;
     public string userName;
     public bool isEmptyUserJournal;
     public int currentChallenge;
+    public List<DailyRecord> record;
     public string usersJournal;
+
     private FileStream userDataJsonFile;
-    public UserData LoadUserData()
-    {
+    public UserData LoadUserData() {
         // Load from json file
         string path = Application.dataPath + "\\Data\\UserData.json";
         FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
@@ -22,12 +22,10 @@ public class UserData
         reader.Close();
         return loadDataJson;
     }
-    public void SaveUserData()
-    {
+    public void SaveUserData() {
         // Load from json file
     }
-    public void SaveUserJournal(string newUsersJournal)
-    { 
+    public void SaveUserJournal(string newUsersJournal) { 
         UserData loadDataJson = LoadUserData(); // for saving json file
         loadDataJson.usersJournal = newUsersJournal;
 
@@ -42,8 +40,7 @@ public class UserData
 
         writer.Close();
     }
-    public static string FormatJson(string str)
-    {
+    public static string FormatJson(string str) {
         str = (str ?? "").Replace("{}", @"\{\}").Replace("[]", @"\[\]");
 
         int INDENT_SIZE = 4;
@@ -82,8 +79,7 @@ public class UserData
             escape = (chr == '\\') ? !escape : false;
         }
 
-        if (inserts.Count > 0)
-        {
+        if (inserts.Count > 0) {
             var sb = new System.Text.StringBuilder(str.Length * 2);
 
             int lastIndex = 0;

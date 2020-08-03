@@ -38,6 +38,6 @@ public class challengeBoardCore : MonoBehaviour {
     void ToChallenge(string challengePath) {
         Debug.Log(challengePath);
         File.Copy(challengePath, Application.dataPath + "\\challenge.json", true);
-        SceneManager.LoadScene("Challenge");
+        SceneManager.LoadScene("Journey");
     }
 }
