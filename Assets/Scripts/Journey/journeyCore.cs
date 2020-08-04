@@ -1,30 +1,24 @@
-﻿using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class challengeCore : MonoBehaviour {
+public class journeyCore : MonoBehaviour {
 
     private Challenge challenge;
 
     public Text challengeName;
     public Text challengeDes;
     
-    private Challenge ReadChallenge() {
-        StreamReader r = new StreamReader(Application.dataPath + "\\challenge.json");
-        string json = r.ReadToEnd();
-        Challenge res = JsonUtility.FromJson<Challenge>(json);
-        return res;
-    }
     void Start() {
 
         //request challenge from server
 
-        challenge = ReadChallenge();
+        challenge = challenge.ReadCurrentChallenge();
 
         challengeName.text = challenge.challengeName;
         challengeDes.text = challenge.challengeDescription;
 
-
+        SceneManager.LoadScene("Progress", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
