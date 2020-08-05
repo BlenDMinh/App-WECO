@@ -1,6 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class Challenge {
     public string challengeName, challengeDescription;
@@ -16,10 +17,10 @@ public class Challenge {
 				challengeReward.coin += tasks[i].reward.coin;
 	}
 
-	public Challenge ReadCurrentChallenge() {
-		StreamReader r = new StreamReader(Application.dataPath + "\\challenge.json");
+	public static Challenge LoadCurrentChallenge() {
+		StreamReader r = new StreamReader(Application.dataPath + "\\Data\\challenge.json");
 		string json = r.ReadToEnd();
-		Challenge res = JsonUtility.FromJson<Challenge>(json);
+		Challenge res = JsonConvert.DeserializeObject<Challenge>(json);
 		return res;
 	}
 }

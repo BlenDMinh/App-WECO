@@ -1,22 +1,40 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.UI;
 
 public class progressCore : MonoBehaviour {
     [SerializeField] private Sprite circleSprite;
+    public Text startDate, endDate;
     public RectTransform canvas;
     public RectTransform graphContainer;
     // Start is called before the first frame update
     float H, W;
     void Start() {
-        Challenge challenge = new Challenge();
-        challenge = challenge.ReadCurrentChallenge();
-         H = graphContainer.sizeDelta.y;
-         W = graphContainer.sizeDelta.x;
-        showGraph(new List<int>{55, 41, 23, 54, 65, 30, 46, 21, 23, 80, 40});
+        H = graphContainer.sizeDelta.y;
+        W = graphContainer.sizeDelta.x;
+        string challengeName = Challenge.LoadCurrentChallenge().challengeName;
+        Debug.Log(challengeName);
+        List<int> list = ConvertToGraph(UserData.LoadUserData().record[challengeName]);
+        showGraph(list);
+    }
+
+    private List<int> ConvertToGraph(List<DailyRecord> record) {
+        startDate.text = record[0].date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+        endDate.text = record[record.Count - 1].date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+        List<int> res = new List<int>();
+        DateTime date = record[0].date;
+        foreach(DailyRecord dr in record) {
+            Debug.Log(DateTime.Compare(date, dr.date));
+            while (DateTime.Compare(date, dr.date) < 0) {
+                date = date.AddDays(1);
+                res.Add(0);
+            }
+            res.Add(dr.taskCount);
+        }
+        return res;
     }
 
     private void showGraph(List<int> val) {
@@ -37,8 +55,11 @@ public class progressCore : MonoBehaviour {
 
         //Draw line graph
 
-        for(float y = yMin; y <= yMax; y += 10)
-            createHorizontalLine((y - yMin) / (yMax - yMin) * H - H * 0.5f, y);
+        for (float y = yMin; y <= yMax; y += 10) {
+            createHorizontalLine((y - yMin) / (yMax - yMin) * H - H * 0.5f);
+            addUnit((y - yMin) / (yMax - yMin) * H - H * 0.5f, y);
+        }
+
 
 
         GameObject lastCircle = null;
@@ -76,7 +97,7 @@ public class progressCore : MonoBehaviour {
         r.localEulerAngles = new Vector3(0, 0, (float) (Math.Atan2(dir.y , dir.x) * (180/Math.PI)));
     }
 
-    private void createHorizontalLine(float y, float val) {
+    private void createHorizontalLine(float y) {
         GameObject line = new GameObject("HLine", typeof(Image));
         line.transform.SetParent(graphContainer);
         line.GetComponent<Image>().color = new Color(217f/255, 217f/255, 217f/255);
@@ -84,20 +105,21 @@ public class progressCore : MonoBehaviour {
 
         r.sizeDelta = new Vector2(graphContainer.sizeDelta.x * canvas.localScale.x, 3f * canvas.localScale.y);
         r.anchoredPosition = new Vector2(0, y);
+    }
 
-
+    private void addUnit(float y, float val) {
         GameObject unit = new GameObject("HUnit", typeof(Text));
         unit.transform.SetParent(graphContainer);
         Text t = unit.GetComponent<Text>();
 
-        t.font = (Font) Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+        t.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
         t.color = new Color(150f / 255, 150f / 255, 150f / 255);
         t.text = val.ToString();
-        t.fontSize = (int) (30 * canvas.localScale.x);
+        t.fontSize = (int)(30 * canvas.localScale.x);
         t.alignment = TextAnchor.MiddleRight;
-    
-        r = unit.GetComponent<RectTransform>();
+
+        RectTransform r = unit.GetComponent<RectTransform>();
         r.sizeDelta = new Vector2(50 * canvas.localScale.x, 50 * canvas.localScale.y);
-        r.anchoredPosition = new Vector2( -W * 0.55f, y);
+        r.anchoredPosition = new Vector2(-W * 0.55f, y);
     }
 }

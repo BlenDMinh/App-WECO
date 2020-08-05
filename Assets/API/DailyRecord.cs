@@ -1,13 +1,17 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 public class DailyRecord  {
-    public System.DateTime date;
+    public DateTime date;
     public int taskCount;
 
     public DailyRecord() {
-        date = System.DateTime.Today;
+        date = DateTime.Today;
         taskCount = 0;
+    }
+
+    public DailyRecord(DateTime _date, int _taskCount) {
+        date = _date;
+        taskCount = _taskCount;
     }
 }
