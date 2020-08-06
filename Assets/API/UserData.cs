@@ -12,15 +12,27 @@ public class UserData {
     public string usersJournal;
 
     private FileStream userDataJsonFile;
+
+    [System.Obsolete]
     public static UserData LoadUserData() {
         // Load from json file
-        string path = Application.dataPath + "\\Data\\UserData.json";
-        FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
-        StreamReader reader = new StreamReader(userDataJsonFile);
-        string json = reader.ReadToEnd();
-        UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
-        reader.Close();
-        return loadDataJson;
+        if (Application.platform == RuntimePlatform.Android) {
+            string path = Application.persistentDataPath + "//Data//UserData.json";
+            FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
+            StreamReader reader = new StreamReader(userDataJsonFile);
+            string json = reader.ReadToEnd();
+            UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
+            reader.Close();
+            return loadDataJson;
+        } else {
+            string path = Application.dataPath + "//Data//UserData.json";
+            FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
+            StreamReader reader = new StreamReader(userDataJsonFile);
+            string json = reader.ReadToEnd();
+            UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
+            reader.Close();
+            return loadDataJson;
+        }
     }
     public void SaveUserData() {
         // Load from json file
@@ -32,7 +44,7 @@ public class UserData {
         this.usersJournal = newUsersJournal; // for data object
 
         string json = JsonUtility.ToJson(loadDataJson);
-        string path = Application.dataPath + "\\Data\\UserData.json";
+        string path = Application.persistentDataPath + "//Data//UserData.json";
         userDataJsonFile = new FileStream(path, FileMode.Create);
         StreamWriter writer = new StreamWriter(userDataJsonFile);
         json = FormatJson(json);

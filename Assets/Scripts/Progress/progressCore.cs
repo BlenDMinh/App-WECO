@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class progressCore : MonoBehaviour {
@@ -12,11 +13,13 @@ public class progressCore : MonoBehaviour {
     public RectTransform graphContainer;
     // Start is called before the first frame update
     float H, W;
+
+    [Obsolete]
     void Start() {
         H = graphContainer.sizeDelta.y;
         W = graphContainer.sizeDelta.x;
-        string challengeName = Challenge.LoadCurrentChallenge().challengeName;
-        Debug.Log(challengeName);
+        Debug.Log(Application.persistentDataPath + "\\Data\\challenge.json");
+        string challengeName = "Huy is";
         List<int> list = ConvertToGraph(UserData.LoadUserData().record[challengeName]);
         showGraph(list);
     }
@@ -27,7 +30,6 @@ public class progressCore : MonoBehaviour {
         List<int> res = new List<int>();
         DateTime date = record[0].date;
         foreach(DailyRecord dr in record) {
-            Debug.Log(DateTime.Compare(date, dr.date));
             while (DateTime.Compare(date, dr.date) < 0) {
                 date = date.AddDays(1);
                 res.Add(0);

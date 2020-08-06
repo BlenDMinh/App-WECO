@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 public class Challenge {
     public string challengeName, challengeDescription;
@@ -18,7 +19,7 @@ public class Challenge {
 	}
 
 	public static Challenge LoadCurrentChallenge() {
-		StreamReader r = new StreamReader(Application.dataPath + "\\Data\\challenge.json");
+		StreamReader r = new StreamReader(Application.persistentDataPath + "//Data//challenge.json");
 		string json = r.ReadToEnd();
 		Challenge res = JsonConvert.DeserializeObject<Challenge>(json);
 		return res;
