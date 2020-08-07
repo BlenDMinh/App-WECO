@@ -11,6 +11,7 @@ public class progressCore : MonoBehaviour {
     public Text startDate, endDate;
     public RectTransform canvas;
     public RectTransform graphContainer;
+    public Text number;
     // Start is called before the first frame update
     float H, W;
 
@@ -18,10 +19,12 @@ public class progressCore : MonoBehaviour {
     void Start() {
         H = graphContainer.sizeDelta.y;
         W = graphContainer.sizeDelta.x;
-        Debug.Log(Application.persistentDataPath + "\\Data\\challenge.json");
-        string challengeName = "Huy is";
-        List<int> list = ConvertToGraph(UserData.LoadUserData().record[challengeName]);
-        showGraph(list);
+        string challengeName = Challenge.LoadCurrentChallenge().challengeName;
+        SortedDictionary<string, List<DailyRecord>> record = UserData.LoadUserData().record;
+        if (record.ContainsKey(challengeName)) {
+            List<int> list = ConvertToGraph(record[challengeName]);
+            showGraph(list);
+        }
     }
 
     private List<int> ConvertToGraph(List<DailyRecord> record) {
@@ -29,13 +32,16 @@ public class progressCore : MonoBehaviour {
         endDate.text = record[record.Count - 1].date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
         List<int> res = new List<int>();
         DateTime date = record[0].date;
+        int fishCount = 0;
         foreach(DailyRecord dr in record) {
             while (DateTime.Compare(date, dr.date) < 0) {
                 date = date.AddDays(1);
                 res.Add(0);
             }
+            fishCount += dr.fishCount;
             res.Add(dr.taskCount);
         }
+        number.text = fishCount.ToString();
         return res;
     }
 
@@ -62,7 +68,9 @@ public class progressCore : MonoBehaviour {
             addUnit((y - yMin) / (yMax - yMin) * H - H * 0.5f, y);
         }
 
-
+        for(float x = 0; x < W; x = Math.Min(x + xSize * 5, W))
+            createVerticalLine(x - W / 2);
+        createVerticalLine(W / 2);
 
         GameObject lastCircle = null;
         for(int i = 0; i < val.Count; i++) {
@@ -71,7 +79,12 @@ public class progressCore : MonoBehaviour {
             GameObject curCircle = createCircle(new Vector2(x, y));
             if (lastCircle != null)
                 createDotConnection(curCircle.GetComponent<RectTransform>().anchoredPosition, lastCircle.GetComponent<RectTransform>().anchoredPosition);
+            Destroy(lastCircle);
             lastCircle = curCircle;
+        }
+
+        for (int i = 0; i < val.Count; i++) {
+            GameObject circle = createCircle(new Vector2(i * xSize, ((val[i] - yMin) / (yMax - yMin)) * H));
         }
     }
     private GameObject createCircle(Vector2 anchorPos) {
@@ -81,22 +94,32 @@ public class progressCore : MonoBehaviour {
         RectTransform r = circle.GetComponent<RectTransform>();
         r.anchoredPosition = anchorPos;
         r.anchorMin = r.anchorMax = new Vector2(0, 0);
-        r.sizeDelta = new Vector2(0, 0);
+        r.sizeDelta = new Vector2(20 * canvas.localScale.x, 20 * canvas.localScale.x);
         return circle;
     }
 
     private void createDotConnection(Vector2 A, Vector2 B) {
         GameObject line = new GameObject("Line", typeof(Image));
         line.transform.SetParent(graphContainer);
-        line.GetComponent<Image>().color = new Color(127f/255, 211f/255, 1f/255);
+        line.GetComponent<Image>().color = new Color(65f/255, 237f/255, 48f/255);
         RectTransform r = line.GetComponent<RectTransform>();
         Vector2 dir = (B - A).normalized;
         float dis = Vector2.Distance(A, B);
 
         r.anchorMin = r.anchorMax = new Vector2(0, 0);
-        r.sizeDelta = new Vector2(dis * canvas.localScale.x, 7.5f * canvas.localScale.x);
+        r.sizeDelta = new Vector2(dis * canvas.localScale.x, 5f * canvas.localScale.x);
         r.anchoredPosition = A + dir * dis * 0.5f;
         r.localEulerAngles = new Vector3(0, 0, (float) (Math.Atan2(dir.y , dir.x) * (180/Math.PI)));
+    }
+
+    private void createVerticalLine(float x) {
+        GameObject line = new GameObject("VLine", typeof(Image));
+        line.transform.SetParent(graphContainer);
+        line.GetComponent<Image>().color = new Color(217f / 255, 217f / 255, 217f / 255);
+        RectTransform r = line.GetComponent<RectTransform>();
+
+        r.sizeDelta = new Vector2(3f * canvas.localScale.x, graphContainer.sizeDelta.y * canvas.localScale.y);
+        r.anchoredPosition = new Vector2(x, 0);
     }
 
     private void createHorizontalLine(float y) {
@@ -115,7 +138,7 @@ public class progressCore : MonoBehaviour {
         Text t = unit.GetComponent<Text>();
 
         t.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        t.color = new Color(150f / 255, 150f / 255, 150f / 255);
+        t.color = new Color(0.1f, 0.1f, 0.1f);
         t.text = val.ToString();
         t.fontSize = (int)(30 * canvas.localScale.x);
         t.alignment = TextAnchor.MiddleRight;

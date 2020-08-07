@@ -15,8 +15,6 @@ public class journeyCore : MonoBehaviour {
 
         challenge = Challenge.LoadCurrentChallenge();
 
-        challengeName.text = challenge.challengeName;
-        challengeDes.text = challenge.challengeDescription;
 
         SceneManager.LoadScene("Progress", LoadSceneMode.Additive);
     }
