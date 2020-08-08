@@ -34,7 +34,6 @@ public class challengeBoardCore : MonoBehaviour {
             Button button = Instantiate(challengeButton, buttonParent);
             button.transform.SetParent(buttonParent);
             button.transform.position = new Vector2(0, curY);
-            Debug.Log("\\challengeTexture\\" + c.challengeName + "_button");
             button.GetComponent<Image>().sprite = Resources.Load<Sprite>("challengeTexture\\" + c.challengeName + "_button");
             button.GetComponent<Image>().type = Image.Type.Simple;
             button.GetComponent<Image>().preserveAspect = true;
@@ -45,8 +44,13 @@ public class challengeBoardCore : MonoBehaviour {
     }
 
     void ToChallenge(string writeData) {
-        Directory.CreateDirectory(Application.persistentDataPath + "\\Data\\");
-        File.WriteAllText(Application.persistentDataPath + "\\Data\\challenge.json", writeData);
+        if (Application.platform == RuntimePlatform.Android) {
+            Directory.CreateDirectory(Application.persistentDataPath + "//Data//");
+            File.WriteAllText(Application.persistentDataPath + "//Data//challenge.json", writeData);
+        } else {
+            Directory.CreateDirectory(Application.dataPath + "//Data//");
+            File.WriteAllText(Application.dataPath + "//Data//challenge.json", writeData);
+        }
         SceneManager.LoadScene("Journey");
     }
 }

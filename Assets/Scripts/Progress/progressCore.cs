@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class progressCore : MonoBehaviour {
     [SerializeField] private Sprite circleSprite;
+    public Text Name;
     public Text startDate, endDate;
     public RectTransform canvas;
     public RectTransform graphContainer;
@@ -20,6 +21,7 @@ public class progressCore : MonoBehaviour {
         H = graphContainer.sizeDelta.y;
         W = graphContainer.sizeDelta.x;
         string challengeName = Challenge.LoadCurrentChallenge().challengeName;
+        Name.text = challengeName + " CHALLENGE";
         SortedDictionary<string, List<DailyRecord>> record = UserData.LoadUserData().record;
         if (record.ContainsKey(challengeName)) {
             List<int> list = ConvertToGraph(record[challengeName]);

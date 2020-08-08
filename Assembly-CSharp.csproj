@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
     <Compile Include="Assets\Scripts\Journal\SaveJournalText.cs" />
     <Compile Include="Assets\Scripts\Journey\journeyCore.cs" />
+    <Compile Include="Assets\Scripts\Journey\toProgressButton.cs" />
     <Compile Include="Assets\Scripts\Main Menu\Settings_button.cs" />
     <Compile Include="Assets\Scripts\Progress\outButton.cs" />
     <Compile Include="Assets\Scripts\Progress\progressCore.cs" />

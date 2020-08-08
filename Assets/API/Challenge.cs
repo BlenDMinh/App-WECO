@@ -19,7 +19,11 @@ public class Challenge {
 	}
 
 	public static Challenge LoadCurrentChallenge() {
-		StreamReader r = new StreamReader(Application.persistentDataPath + "//Data//challenge.json");
+		StreamReader r;
+		if (Application.platform == RuntimePlatform.Android)
+			r = new StreamReader(Application.persistentDataPath + "//Data//challenge.json");
+		else
+			r = new StreamReader(Application.dataPath + "//Data//challenge.json");
 		string json = r.ReadToEnd();
 		Challenge res = JsonConvert.DeserializeObject<Challenge>(json);
 		return res;

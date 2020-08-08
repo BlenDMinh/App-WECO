@@ -3,24 +3,4 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class journeyCore : MonoBehaviour {
-
-    private Challenge challenge;
-
-    public Text challengeName;
-    public Text challengeDes;
-    
-    void Start() {
-
-        //request challenge from server
-
-        challenge = Challenge.LoadCurrentChallenge();
-
-
-        SceneManager.LoadScene("Progress", LoadSceneMode.Additive);
-    }
-
-    // Update is called once per frame
-    void Update() {
-        
-    }
 }
