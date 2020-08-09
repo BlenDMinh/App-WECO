@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\API\Challenge.cs" />
     <Compile Include="Assets\API\DailyRecord.cs" />
+    <Compile Include="Assets\API\IMG2Sprite.cs" />
     <Compile Include="Assets\API\Reward.cs" />
     <Compile Include="Assets\API\Task.cs" />
     <Compile Include="Assets\API\UserData.cs" />

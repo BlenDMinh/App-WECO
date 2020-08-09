@@ -2,21 +2,13 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using UnityEngine.Networking;
-
 public class Challenge {
     public string challengeName, challengeDescription;
-    public Reward challengeReward;
-	int requiredScore;
-
+	public float bgW = 1000, bgH = 1000;
+	public float btW = 10, btH = 10;
 	public List<Task> tasks;
+	public List<Task> todos;
 	List<bool> completed;
-	
-	void getReward() {
-		for (int i = 0; i < tasks.Count; i++)
-			if (completed[i])
-				challengeReward.coin += tasks[i].reward.coin;
-	}
 
 	public static Challenge LoadCurrentChallenge() {
 		StreamReader r;
