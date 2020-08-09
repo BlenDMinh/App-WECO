@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class journeyCore : MonoBehaviour {
@@ -26,7 +27,7 @@ public class journeyCore : MonoBehaviour {
             RectTransform r = newButton.GetComponent<RectTransform>();
 
             r.sizeDelta = new Vector2(challenge.btW, challenge.btH);
-            r.anchoredPosition = new Vector2((t.x / sprite.rect.width) * challenge.bgW * scale, -(t.y / sprite.rect.height) * challenge.bgH * scale);
+            r.anchoredPosition = new Vector2((t.x / sprite.rect.width) * challenge.bgW, -(t.y / sprite.rect.height) * challenge.bgH);
             r.anchorMin = r.anchorMax = new Vector2(0, 1);
 
             newButton.onClick.AddListener(delegate {
@@ -38,6 +39,7 @@ public class journeyCore : MonoBehaviour {
                     Directory.CreateDirectory(Application.dataPath + "//Data//");
                     File.WriteAllText(Application.dataPath + "//Data//task.json", writeData);
                 }
+                SceneManager.LoadScene("Task", LoadSceneMode.Additive);
             });
         }
     }
