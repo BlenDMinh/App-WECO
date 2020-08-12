@@ -12,9 +12,10 @@ public class taskCore : MonoBehaviour {
     public Button confirmButton;
 
     private Task task;
-    private List<Slider> reqList;
+    List<Slider> reqList;
 
     void Start() {
+        reqList = new List<Slider>();
         float curY, off;
         off = reqContainer.GetComponent<RectTransform>().anchoredPosition.y;
         curY = reqContainer.GetComponent<RectTransform>().sizeDelta.y;
@@ -36,6 +37,7 @@ public class taskCore : MonoBehaviour {
             unit.GetComponent<Text>().text = req.Key;
             slider.maxValue = req.Value;
 
+
             reqList.Add(slider);
 
             curY -= r.sizeDelta.y;
@@ -52,5 +54,7 @@ public class taskCore : MonoBehaviour {
             }
         if (isAccept)
             confirmButton.interactable = true;
+        else
+            confirmButton.interactable = false;
     }
 }

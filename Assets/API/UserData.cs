@@ -7,7 +7,6 @@ public class UserData {
     public bool isNHH;
     public string userName;
     public bool isEmptyUserJournal;
-    public int currentChallenge;
     public SortedDictionary<string, List<DailyRecord>> record;
     public string usersJournal;
 

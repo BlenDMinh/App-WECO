@@ -16,7 +16,5 @@ public class SaveJournalText : MonoBehaviour
     public void LoadJournal()
     {
         data = UserData.LoadUserData();
-        this.GetComponent()
-
     }
 }

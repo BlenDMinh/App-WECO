@@ -69,6 +69,7 @@
     <Compile Include="Assets\API\Reward.cs" />
     <Compile Include="Assets\API\Task.cs" />
     <Compile Include="Assets\API\UserData.cs" />
+    <Compile Include="Assets\API\UserSave.cs" />
     <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
     <Compile Include="Assets\Scripts\Journal\SaveJournalText.cs" />
     <Compile Include="Assets\Scripts\Journey\journeyCore.cs" />
@@ -76,7 +77,9 @@
     <Compile Include="Assets\Scripts\Main Menu\Settings_button.cs" />
     <Compile Include="Assets\Scripts\Progress\outButton.cs" />
     <Compile Include="Assets\Scripts\Progress\progressCore.cs" />
+    <Compile Include="Assets\Scripts\Submission\initInputField.cs" />
     <Compile Include="Assets\Scripts\Task\exitButton.cs" />
+    <Compile Include="Assets\Scripts\Task\requirementControl.cs" />
     <Compile Include="Assets\Scripts\Task\taskCore.cs" />
     <Compile Include="Assets\Scripts\toScene.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
