@@ -10,7 +10,7 @@
 			{ 
 			"taskDescription":"Count number of plastic bags you are using", "x":110, "y":410,
 			"requirement": {
-				"plastic bags":5,
+				"Plastic bags":5,
 				"a":9
 			}
 			},
