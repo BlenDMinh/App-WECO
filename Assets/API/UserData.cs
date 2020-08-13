@@ -33,6 +33,23 @@ public class UserData {
         return user.challengeProgress[challenge.challengeName];
     }
 
+    public static List<Dictionary<string, int>> GetTaskProgress(UserData user, Challenge challenge) {
+        if (user.taskProgress == null)
+            user.taskProgress = new SortedDictionary<string, List<Dictionary<string, int>>>();
+        if (!user.taskProgress.ContainsKey(challenge.challengeName)) {
+            user.taskProgress.Add(challenge.challengeName, new List<Dictionary<string, int>>());
+            for (int i = 0; i < challenge.tasks.Count; i++)
+                user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
+            SaveUserData(user);
+        }
+        if (user.taskProgress[challenge.challengeName].Count == 0) {
+            for (int i = 0; i < challenge.tasks.Count; i++)
+                user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
+            SaveUserData(user);
+        }
+        return user.taskProgress[challenge.challengeName];
+    }
+
     [System.Obsolete]
     public static UserData LoadUserData() {
         string path;
@@ -40,6 +57,8 @@ public class UserData {
             path = Application.persistentDataPath + "//Data//UserData.json";
         else
             path = Application.dataPath + "//Data//UserData.json";
+        if (!File.Exists(path))
+            SaveUserData(new UserData());
         FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
         StreamReader reader = new StreamReader(userDataJsonFile);
         string json = reader.ReadToEnd();

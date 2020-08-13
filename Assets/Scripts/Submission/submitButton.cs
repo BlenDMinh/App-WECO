@@ -5,15 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class submitButton : MonoBehaviour {
 
-    bool inRange(float num, float low, float high) {
-        return (num < high && num > low);
-    }
-
     public void submit() {
         Task task = Task.LoadCurrentTask();
         UserData user = UserData.LoadUserData();
         Challenge challenge = Challenge.LoadCurrentChallenge();
 
+        if (user.record == null)
+            user.record = new SortedDictionary<string, List<DailyRecord>>();
         if (!user.record.ContainsKey(challenge.challengeName))
             user.record.Add(challenge.challengeName, new List<DailyRecord>());
         List<DailyRecord> record = user.record[challenge.challengeName];

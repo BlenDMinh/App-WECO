@@ -37,14 +37,19 @@ public class taskCore : MonoBehaviour {
             GameObject maxVal = obj.transform.Find("maxVal").gameObject;
             GameObject unit = obj.transform.Find("unit").gameObject;
             Slider slider = obj.transform.Find("Slider").GetComponent<Slider>();
+            InputField inputField = obj.transform.Find("InputField").GetComponent<InputField>();
 
             minVal.GetComponent<Text>().text = "0";
             maxVal.GetComponent<Text>().text = req.Value.ToString();
             unit.GetComponent<Text>().text = req.Key;
             slider.maxValue = req.Value;
 
-            Dictionary<string, int> progress = user.taskProgress[challenge.challengeName][task.id];
-            slider.value = progress[req.Key];
+            Dictionary<string, int> progress = UserData.GetTaskProgress(user, challenge)[task.id];
+            if (progress.ContainsKey(req.Key))
+                slider.value = progress[req.Key];
+            else
+                slider.value = 0;
+            inputField.text = slider.value.ToString();
 
             reqList.Add(slider);
 
