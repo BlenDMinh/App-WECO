@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class taskCore : MonoBehaviour {
@@ -10,11 +10,17 @@ public class taskCore : MonoBehaviour {
     public GameObject reqBox;
     public Text taskDesc;
     public Button confirmButton;
+    public Text status;
 
+    private Challenge challenge;
+    private UserData user;
     private Task task;
     List<Slider> reqList;
 
+    [Obsolete]
     void Start() {
+        challenge = Challenge.LoadCurrentChallenge();
+        user = UserData.LoadUserData();
         reqList = new List<Slider>();
         float curY, off;
         off = reqContainer.GetComponent<RectTransform>().anchoredPosition.y;
@@ -37,6 +43,8 @@ public class taskCore : MonoBehaviour {
             unit.GetComponent<Text>().text = req.Key;
             slider.maxValue = req.Value;
 
+            Dictionary<string, int> progress = user.taskProgress[challenge.challengeName][task.id];
+            slider.value = progress[req.Key];
 
             reqList.Add(slider);
 
@@ -56,5 +64,33 @@ public class taskCore : MonoBehaviour {
             confirmButton.interactable = true;
         else
             confirmButton.interactable = false;
+        if (status == null)
+            return;
+        string s = status.text;
+
+        //Save current task progress
+        if (s == "exit" || s == "submit") {
+            Dictionary<string, int> progress = new Dictionary<string, int>();
+            for(int i = 0; i < task.requirement.Count; i++)
+                progress.Add(reqList[i].transform.parent.Find("unit").GetComponent<Text>().text,(int) reqList[i].value);
+            if (user.taskProgress == null)
+                user.taskProgress = new SortedDictionary<string, List<Dictionary<string, int>>>();
+            if (!user.taskProgress.ContainsKey(challenge.challengeName)) {
+                user.taskProgress.Add(challenge.challengeName, new List<Dictionary<string, int>>());
+                for (int j = 0; j < 21; j++)
+                    user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
+            }
+            if (user.taskProgress[challenge.challengeName].Count == 0)
+                for (int j = 0; j < 21; j++)
+                    user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
+            user.taskProgress[challenge.challengeName][task.id] = progress;
+            UserData.SaveUserData(user);
+        }
+
+
+        if (s == "exit")
+            SceneManager.UnloadSceneAsync("Task");
+        if (s == "submit")
+            SceneManager.LoadScene("Submission");
     }
 }

@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class exitButton : MonoBehaviour {
 
     public GameObject canvas;
     [SerializeField]
     private float delayTime;
+    public Text status;
     private float time;
     private string scenename;
     private void Start() {
@@ -27,6 +27,7 @@ public class exitButton : MonoBehaviour {
         time += Time.deltaTime;
         if (time < delayTime)
             return;
-        SceneManager.UnloadSceneAsync(scenename);
+        status.text = "exit";
+        //SceneManager.UnloadSceneAsync(scenename);
     }
 }

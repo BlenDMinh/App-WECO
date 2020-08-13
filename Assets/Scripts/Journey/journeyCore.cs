@@ -22,7 +22,9 @@ public class journeyCore : MonoBehaviour {
         RectTransform content = scrollback.content;
         content.sizeDelta = i.rectTransform.rect.size;
 
+        int id = 0;
         foreach(Task t in challenge.tasks) {
+            t.id = id;
             Button newButton = Instantiate(button, scrollback.content);
             RectTransform r = newButton.GetComponent<RectTransform>();
 
@@ -41,6 +43,7 @@ public class journeyCore : MonoBehaviour {
                 }
                 SceneManager.LoadScene("Task", LoadSceneMode.Additive);
             });
+            id++;
         }
     }
 }

@@ -8,6 +8,7 @@ public class Task {
 	public Reward reward;
     public float x, y;
 	public Dictionary<string, int> requirement;
+	public int id;
 
 	public static Task LoadCurrentTask() {
 		StreamReader r;

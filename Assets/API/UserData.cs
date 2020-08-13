@@ -7,35 +7,38 @@ public class UserData {
     public bool isNHH;
     public string userName;
     public bool isEmptyUserJournal;
+
     public SortedDictionary<string, List<DailyRecord>> record;
+    public SortedDictionary<string, List<Dictionary<string, int>>> taskProgress;
+
     public string usersJournal;
 
     private FileStream userDataJsonFile;
 
     [System.Obsolete]
     public static UserData LoadUserData() {
-        // Load from json file
-        if (Application.platform == RuntimePlatform.Android) {
-            string path = Application.persistentDataPath + "//Data//UserData.json";
-            FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
-            StreamReader reader = new StreamReader(userDataJsonFile);
-            string json = reader.ReadToEnd();
-            UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
-            reader.Close();
-            return loadDataJson;
-        } else {
-            string path = Application.dataPath + "//Data//UserData.json";
-            FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
-            StreamReader reader = new StreamReader(userDataJsonFile);
-            string json = reader.ReadToEnd();
-            UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
-            reader.Close();
-            return loadDataJson;
-        }
+        string path;
+        if (Application.platform == RuntimePlatform.Android)
+            path = Application.persistentDataPath + "//Data//UserData.json";
+        else
+            path = Application.dataPath + "//Data//UserData.json";
+        FileStream userDataJsonFile = new FileStream(path, FileMode.Open);
+        StreamReader reader = new StreamReader(userDataJsonFile);
+        string json = reader.ReadToEnd();
+        UserData loadDataJson = JsonConvert.DeserializeObject<UserData>(json);
+        reader.Close();
+        return loadDataJson;
     }
-    public void SaveUserData() {
-        // Load from json file
+    public static void SaveUserData(UserData userdata) {
+        string path;
+        if (Application.platform == RuntimePlatform.Android)
+            path = Application.persistentDataPath + "//Data//UserData.json";
+        else
+            path = Application.dataPath + "//Data//UserData.json";
+        File.WriteAllText(path, JsonConvert.SerializeObject(userdata));
     }
+
+    [System.Obsolete]
     public void SaveUserJournal(string newUsersJournal) {
         UserData loadDataJson = LoadUserData(); // for saving json file
         loadDataJson.usersJournal = newUsersJournal;
