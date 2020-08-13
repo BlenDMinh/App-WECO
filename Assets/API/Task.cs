@@ -18,6 +18,7 @@ public class Task {
 			r = new StreamReader(Application.dataPath + "//Data//task.json");
 		string json = r.ReadToEnd();
 		Task res = JsonConvert.DeserializeObject<Task>(json);
+		r.Close();
 		return res;
 	}
 }

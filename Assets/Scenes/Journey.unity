@@ -166,6 +166,8 @@ MonoBehaviour:
   button: {fileID: 4250980391084141949, guid: dc3de3291f6f5d94baddf0d83f959337, type: 3}
   i: {fileID: 863970024}
   scrollback: {fileID: 727395840}
+  completed: {fileID: 21300000, guid: f1318b46a751ade4da9c68518ba08bcc, type: 3}
+  forbidden: {fileID: 21300000, guid: 3d720600f8e4e20419900265cfba5a39, type: 3}
 --- !u!1 &335236193
 GameObject:
   m_ObjectHideFlags: 0

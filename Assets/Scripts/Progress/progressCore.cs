@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class progressCore : MonoBehaviour {

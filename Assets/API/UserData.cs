@@ -10,10 +10,28 @@ public class UserData {
 
     public SortedDictionary<string, List<DailyRecord>> record;
     public SortedDictionary<string, List<Dictionary<string, int>>> taskProgress;
+    public SortedDictionary<string, List<bool>> challengeProgress;
 
     public string usersJournal;
 
     private FileStream userDataJsonFile;
+
+    public static List<bool> GetChallengeProgress(UserData user, Challenge challenge) {
+        if (user.challengeProgress == null)
+            user.challengeProgress = new SortedDictionary<string, List<bool>>();
+        if (!user.challengeProgress.ContainsKey(challenge.challengeName)) {
+            user.challengeProgress.Add(challenge.challengeName, new List<bool>());
+            for (int i = 0; i < challenge.tasks.Count; i++)
+                user.challengeProgress[challenge.challengeName].Add(false);
+            SaveUserData(user);
+        }
+        if (user.challengeProgress[challenge.challengeName].Count == 0) {
+            for (int i = 0; i < challenge.tasks.Count; i++)
+                user.challengeProgress[challenge.challengeName].Add(false);
+            SaveUserData(user);
+        }
+        return user.challengeProgress[challenge.challengeName];
+    }
 
     [System.Obsolete]
     public static UserData LoadUserData() {

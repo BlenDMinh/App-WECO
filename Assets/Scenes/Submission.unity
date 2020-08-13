@@ -491,6 +491,7 @@ GameObject:
   - component: {fileID: 998012625}
   - component: {fileID: 998012624}
   - component: {fileID: 998012623}
+  - component: {fileID: 998012626}
   m_Layer: 5
   m_Name: submitButton
   m_TagString: Untagged
@@ -559,7 +560,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 998012624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 998012626}
+        m_MethodName: submit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &998012624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +608,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998012621}
   m_CullTransparentMesh: 0
+--- !u!114 &998012626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998012621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3837ffdab4cc9041a5e4a97cd80aa18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1133553567
 GameObject:
   m_ObjectHideFlags: 0

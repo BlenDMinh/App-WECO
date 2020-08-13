@@ -18,6 +18,7 @@ public class Challenge {
 			r = new StreamReader(Application.dataPath + "//Data//challenge.json");
 		string json = r.ReadToEnd();
 		Challenge res = JsonConvert.DeserializeObject<Challenge>(json);
+		r.Close();
 		return res;
 	}
 }

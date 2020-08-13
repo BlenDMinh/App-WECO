@@ -77,11 +77,11 @@ public class taskCore : MonoBehaviour {
                 user.taskProgress = new SortedDictionary<string, List<Dictionary<string, int>>>();
             if (!user.taskProgress.ContainsKey(challenge.challengeName)) {
                 user.taskProgress.Add(challenge.challengeName, new List<Dictionary<string, int>>());
-                for (int j = 0; j < 21; j++)
+                for (int j = 0; j < challenge.tasks.Count; j++)
                     user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
             }
             if (user.taskProgress[challenge.challengeName].Count == 0)
-                for (int j = 0; j < 21; j++)
+                for (int j = 0; j < challenge.tasks.Count; j++)
                     user.taskProgress[challenge.challengeName].Add(new Dictionary<string, int>());
             user.taskProgress[challenge.challengeName][task.id] = progress;
             UserData.SaveUserData(user);

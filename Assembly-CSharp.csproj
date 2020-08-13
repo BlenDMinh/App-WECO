@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Progress\outButton.cs" />
     <Compile Include="Assets\Scripts\Progress\progressCore.cs" />
     <Compile Include="Assets\Scripts\Submission\initInputField.cs" />
+    <Compile Include="Assets\Scripts\Submission\submitButton.cs" />
     <Compile Include="Assets\Scripts\Task\confirmButton.cs" />
     <Compile Include="Assets\Scripts\Task\exitButton.cs" />
     <Compile Include="Assets\Scripts\Task\requirementControl.cs" />
