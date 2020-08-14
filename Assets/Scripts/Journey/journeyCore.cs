@@ -54,6 +54,7 @@ public class journeyCore : MonoBehaviour {
         newImage.GetComponent<Image>().sprite = sprite;
         RectTransform r = newImage.GetComponent<RectTransform>();
 
+        r.localScale = new Vector2(1, 1);
         r.pivot = new Vector2(0, 1);
         r.sizeDelta = new Vector2(challenge.btW * 120 / 100, challenge.btH * 120 / 100);
         r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW - challenge.btW * 10 / 100, -(t.y / bgSprite.rect.height) * challenge.bgH + challenge.btH * 10 / 100);

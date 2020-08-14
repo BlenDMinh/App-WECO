@@ -304,6 +304,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Projects/App WECO/App WECO/Library/PackageCache/jillejr.newtonsoft.json-for-unity@12.0.201/Plugins/Newtonsoft.Json Editor/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>D:/Tools/Coding Tools/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>D:/Tools/Coding Tools/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Tools/Coding Tools/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
     </Reference>
