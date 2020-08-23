@@ -22,8 +22,7 @@ public class taskCore : MonoBehaviour {
         challenge = Challenge.LoadCurrentChallenge();
         user = UserData.LoadUserData();
         reqList = new List<Slider>();
-        float curY, off;
-        off = reqContainer.GetComponent<RectTransform>().anchoredPosition.y;
+        float curY;
         curY = reqContainer.GetComponent<RectTransform>().sizeDelta.y;
         task = Task.LoadCurrentTask();
         taskDesc.text = "\n" + task.taskDescription;
@@ -32,7 +31,9 @@ public class taskCore : MonoBehaviour {
             confirmButton.interactable = false;
             GameObject obj = Instantiate(reqBox, reqContainer.transform);
             RectTransform r = obj.GetComponent<RectTransform>();
-            r.anchoredPosition = new Vector2(0, curY + off);
+            r.anchorMax = r.anchorMin = new Vector2(0.5f, 1);
+            r.anchoredPosition = new Vector2(0, curY);
+
             GameObject minVal = obj.transform.Find("minVal").gameObject;
             GameObject maxVal = obj.transform.Find("maxVal").gameObject;
             GameObject unit = obj.transform.Find("unit").gameObject;
