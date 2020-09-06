@@ -6,7 +6,7 @@ using UnityEngine;
 public class UserData {
     public bool isNHH;
     public string userName;
-    public bool isEmptyUserJournal;
+    public int totalFish;
 
     public SortedDictionary<string, List<DailyRecord>> record;
     public SortedDictionary<string, List<Dictionary<string, int>>> taskProgress;
@@ -155,3 +155,15 @@ public class UserData {
         return str.Replace(@"\{\}", "{}").Replace(@"\[\]", "[]");
     }
 }
+
+//public class UserDataFishComparer : IComparer
+//{
+//    public int Compare(UserData x, UserData y)
+//    {
+//        if (x.totalFish > y.totalFish)
+//        {
+//            return x.totalFish;
+//        }
+//        return y.totalFish;
+//    }
+//}
