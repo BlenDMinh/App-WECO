@@ -40,8 +40,7 @@ public class journeyCore : MonoBehaviour {
                 skip--;
                 Vector2 pos = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW, -(t.y / bgSprite.rect.height) * challenge.bgH);
                 RectTransform r = scrollback.content.GetComponent<RectTransform>();
-                Debug.Log(pos.x);
-                r.anchoredPosition = new Vector2(challenge.bgW - pos.x, r.anchoredPosition.y);
+                r.anchoredPosition = new Vector2(challenge.bgW/2 - pos.x, r.anchoredPosition.y);
             }
 
             id++;

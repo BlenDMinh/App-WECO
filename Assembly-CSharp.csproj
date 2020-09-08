@@ -72,6 +72,7 @@
     <Compile Include="Assets\API\UserSave.cs" />
     <Compile Include="Assets\Scripts\Challenge Board\challengeBoardCore.cs" />
     <Compile Include="Assets\Scripts\Journal\SaveJournalText.cs" />
+    <Compile Include="Assets\Scripts\Journey\journeyAndroidEventControl.cs" />
     <Compile Include="Assets\Scripts\Journey\journeyCore.cs" />
     <Compile Include="Assets\Scripts\Journey\toProgressButton.cs" />
     <Compile Include="Assets\Scripts\Main Menu\Settings_button.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\Scripts\toScene.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Resources\challenges\Plastic bags.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
