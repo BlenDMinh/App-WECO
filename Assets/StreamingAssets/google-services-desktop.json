@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "10925292698",
+    "firebase_url": "https://wecopia.firebaseio.com",
+    "project_id": "wecopia",
+    "storage_bucket": "wecopia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10925292698:android:5f48ffa6063d6fc15db323",
+        "android_client_info": {
+          "package_name": "weco.wecopia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10925292698-s9g57pp1ga52bh4sovj0effpgbujqv3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXDeGMr9_SdbIKouVJ6uOQKB33puLQpGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10925292698-s9g57pp1ga52bh4sovj0effpgbujqv3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

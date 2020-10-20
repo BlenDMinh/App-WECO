@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -20,11 +23,14 @@ public class journeyCore : MonoBehaviour {
         user = UserData.LoadUserData();
         challenge = Challenge.LoadCurrentChallenge();
         bgSprite = Resources.Load<Sprite>("challengeTexture\\" + challenge.challengeName + "_BG");
+        i.gameObject.SetActive(false);
         i.sprite = bgSprite;
         i.GetComponent<RectTransform>().sizeDelta = new Vector2(challenge.bgW, challenge.bgH);
 
         RectTransform content = scrollback.content;
-        content.sizeDelta = i.rectTransform.rect.size;
+        //Set Size of Content to default size
+        //height = number of task * (20% of Screen.height)
+        content.sizeDelta = new Vector2(Screen.width, challenge.tasks.Count * Screen.height * 20 / 100);
 
         int id = 0, skip = 1;
         List<bool> progress = UserData.GetChallengeProgress(user, challenge);
@@ -38,13 +44,11 @@ public class journeyCore : MonoBehaviour {
                 CreateHover(t, bgSprite, forbidden);
             } else {
                 skip--;
-                Vector2 pos = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW, -(t.y / bgSprite.rect.height) * challenge.bgH);
-                RectTransform r = scrollback.content.GetComponent<RectTransform>();
-                r.anchoredPosition = new Vector2(challenge.bgW/2 - pos.x, r.anchoredPosition.y);
             }
-
             id++;
         }
+
+
     }
 
     private void CreateHover(Task t, Sprite bgSprite, Sprite sprite) {
@@ -54,9 +58,10 @@ public class journeyCore : MonoBehaviour {
         RectTransform r = newImage.GetComponent<RectTransform>();
 
         r.localScale = new Vector2(1, 1);
-        r.pivot = new Vector2(0, 1);
-        r.sizeDelta = new Vector2(challenge.btW * 120 / 100, challenge.btH * 120 / 100);
-        r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW - challenge.btW * 10 / 100, -(t.y / bgSprite.rect.height) * challenge.bgH + challenge.btH * 10 / 100);
+        //r.pivot = new Vector2(0, 1);
+        r.sizeDelta = new Vector2(Screen.width * 25 / 100, Screen.width * 25 / 100);
+        //r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW - challenge.btW * 10 / 100, -(t.y / bgSprite.rect.height) * challenge.bgH + challenge.btH * 10 / 100);
+        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * t.id * 20 / 100);
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
     }
 
@@ -64,8 +69,9 @@ public class journeyCore : MonoBehaviour {
         Button newButton = Instantiate(button, scrollback.content);
         RectTransform r = newButton.GetComponent<RectTransform>();
 
-        r.sizeDelta = new Vector2(challenge.btW, challenge.btH);
-        r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW, -(t.y / bgSprite.rect.height) * challenge.bgH);
+        r.localScale = new Vector2(1, 1);
+        r.sizeDelta = new Vector2(Screen.width * 20 / 100, Screen.width * 20 / 100);
+        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * t.id * 20 / 100);
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
 
         newButton.onClick.AddListener(delegate {
