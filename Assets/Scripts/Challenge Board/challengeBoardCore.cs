@@ -7,32 +7,23 @@ using Newtonsoft.Json;
 
 public class challengeBoardCore : MonoBehaviour {
     public Button challengeButton;
-    public Transform buttonParent;
     public RectTransform challengesContent;
-    public Text debugText;
     void Start() {
-
         //Generate buttons
-
         //Read all challenges in to List<Challenge> challenge
         List<string> challenge = new List<string>();
-        //debugText.text = Application.streamingAssetsPath;
-        /*foreach (string path in challengeFilePath) {
-            debugText.text += path + "\n";
-            challenge.Add(JsonUtility.FromJson<Challenge>(new StreamReader(path).ReadToEnd()));
-        }*/
-
+        float buttonHeight = challengeButton.GetComponent<RectTransform>().rect.height;
         challenge = JsonConvert.DeserializeObject<List<string>>((Resources.Load("challengeList") as TextAsset).ToString());
 
-        challengesContent.transform.position = new Vector2(0, buttonParent.parent.parent.transform.position.y);
-        challengesContent.sizeDelta = new Vector2(challengesContent.rect.width, System.Math.Abs(665 - 350 * challenge.Count - (365 + 150)) + 150);
-        float curY = (challengesContent.transform.position.y + 350) * buttonParent.parent.parent.transform.localScale.y;
+        challengesContent.anchoredPosition = new Vector2(0, 0);
+        challengesContent.sizeDelta = new Vector2(challengesContent.rect.width, buttonHeight * challenge.Count);
+        float curY = buttonHeight;
 
         for(int i = 0; i < challenge.Count; i++) {
-            curY -= 350 * buttonParent.parent.parent.transform.localScale.y;
-            Button button = Instantiate(challengeButton, buttonParent);
-            button.transform.SetParent(buttonParent);
-            button.transform.position = new Vector2(0, curY);
+            curY -= buttonHeight;
+            Button button = Instantiate(challengeButton, challengesContent);
+            button.transform.SetParent(challengesContent);
+            button.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, curY);
             button.GetComponent<Image>().sprite = Resources.Load<Sprite>("challengeTexture\\" + challenge[i] + "_button");
             button.GetComponent<Image>().type = Image.Type.Simple;
             button.GetComponent<Image>().preserveAspect = true;
@@ -52,5 +43,9 @@ public class challengeBoardCore : MonoBehaviour {
             File.WriteAllText(Application.dataPath + "//Data//challenge.json", writeData);
         }
         SceneManager.LoadScene("Journey");
+    }
+
+    private void Update() {
+        Debug.Log(challengesContent.anchoredPosition.y);
     }
 }

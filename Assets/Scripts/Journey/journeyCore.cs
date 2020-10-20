@@ -1,7 +1,4 @@
-﻿using Firebase;
-using Firebase.Database;
-using Firebase.Unity.Editor;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -29,8 +26,8 @@ public class journeyCore : MonoBehaviour {
 
         RectTransform content = scrollback.content;
         //Set Size of Content to default size
-        //height = number of task * (20% of Screen.height)
-        content.sizeDelta = new Vector2(Screen.width, challenge.tasks.Count * Screen.height * 20 / 100);
+        //height = (number of tasks + 1) * (20% of Screen.height)
+        content.sizeDelta = new Vector2(Screen.width, (challenge.tasks.Count + 1) * Screen.height * 20 / 100);
 
         int id = 0, skip = 1;
         List<bool> progress = UserData.GetChallengeProgress(user, challenge);
@@ -58,10 +55,8 @@ public class journeyCore : MonoBehaviour {
         RectTransform r = newImage.GetComponent<RectTransform>();
 
         r.localScale = new Vector2(1, 1);
-        //r.pivot = new Vector2(0, 1);
         r.sizeDelta = new Vector2(Screen.width * 25 / 100, Screen.width * 25 / 100);
-        //r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW - challenge.btW * 10 / 100, -(t.y / bgSprite.rect.height) * challenge.bgH + challenge.btH * 10 / 100);
-        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * t.id * 20 / 100);
+        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * (t.id + 1) * 20 / 100);
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
     }
 
@@ -71,8 +66,9 @@ public class journeyCore : MonoBehaviour {
 
         r.localScale = new Vector2(1, 1);
         r.sizeDelta = new Vector2(Screen.width * 20 / 100, Screen.width * 20 / 100);
-        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * t.id * 20 / 100);
+        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * (t.id + 1) * 20 / 100);
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
+
 
         newButton.onClick.AddListener(delegate {
             string writeData = JsonConvert.SerializeObject(t);

@@ -13,7 +13,6 @@ public class toScene : MonoBehaviour {
 		AsyncOperation operation = SceneManager.LoadSceneAsync(name);
 		//SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
 		while(!operation.isDone) {
-			Debug.Log(operation.progress);
 			yield return null;
         }
 		//SceneManager.UnloadSceneAsync("Loading");
