@@ -11,20 +11,30 @@ public class UserData {
     public SortedDictionary<string, List<DailyRecord>> record;
     public SortedDictionary<string, List<Dictionary<string, int>>> taskProgress;
     public SortedDictionary<string, List<bool>> challengeProgress;
+    public SortedDictionary<string, List<Submission>> submissionList;
+
 
     public string usersJournal;
 
-    private FileStream userDataJsonFile;
+    private static FileStream userDataJsonFile;
 
     public static List<bool> GetChallengeProgress(UserData user, Challenge challenge) {
+        // Nếu user không có data về bất cứ challenge nào thì tạo data mới cho challenge
         if (user.challengeProgress == null)
             user.challengeProgress = new SortedDictionary<string, List<bool>>();
+
+        /* Nếu user không có data nào về challenge đã chọn (tên là challenge.challengeName)
+         * thì sẽ tạo data cho challenge đó
+         */
         if (!user.challengeProgress.ContainsKey(challenge.challengeName)) {
             user.challengeProgress.Add(challenge.challengeName, new List<bool>());
             for (int i = 0; i < challenge.tasks.Count; i++)
                 user.challengeProgress[challenge.challengeName].Add(false);
             SaveUserData(user);
         }
+        /* Nếu như không có bất kì data nào về challengeProgress thì mặc định
+         * tất cả progress là false
+         */
         if (user.challengeProgress[challenge.challengeName].Count == 0) {
             for (int i = 0; i < challenge.tasks.Count; i++)
                 user.challengeProgress[challenge.challengeName].Add(false);
@@ -72,7 +82,11 @@ public class UserData {
             path = Application.persistentDataPath + "//Data//UserData.json";
         else
             path = Application.dataPath + "//Data//UserData.json";
-        File.WriteAllText(path, JsonConvert.SerializeObject(userdata));
+
+        string json = JsonConvert.SerializeObject(userdata);
+        json = FormatJson(json);
+
+        File.WriteAllText(path, json);
     }
 
     [System.Obsolete]
@@ -155,15 +169,3 @@ public class UserData {
         return str.Replace(@"\{\}", "{}").Replace(@"\[\]", "[]");
     }
 }
-
-//public class UserDataFishComparer : IComparer
-//{
-//    public int Compare(UserData x, UserData y)
-//    {
-//        if (x.totalFish > y.totalFish)
-//        {
-//            return x.totalFish;
-//        }
-//        return y.totalFish;
-//    }
-//}

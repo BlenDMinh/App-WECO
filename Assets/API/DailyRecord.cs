@@ -1,11 +1,16 @@
 ﻿
 using System;
 
+/// <summary>
+/// DailyRecord: Là thông tin bao gồm về ngày làm task (ngày làm của tất cả
+/// các task), số task làm được, số cá cứu được 
+/// </summary>
+
 public class DailyRecord  {
     public DateTime date;
     public int taskCount;
     public int fishCount;
-
+    ///
     public DailyRecord() {
         date = DateTime.Today;
         taskCount = 0;

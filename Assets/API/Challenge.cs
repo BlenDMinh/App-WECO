@@ -21,4 +21,17 @@ public class Challenge {
 		r.Close();
 		return res;
 	}
+
+    public static List<Challenge> LoadSaveChallenge()
+    {
+        StreamReader reader;
+        if (Application.platform == RuntimePlatform.Android)
+            reader = new StreamReader(Application.persistentDataPath + "//Data//challengeSaveOnline.json");
+        else
+            reader = new StreamReader(Application.dataPath + "//Data//challengeSaveOnline.json");
+
+        string json = reader.ReadToEnd();
+        var saveChallengeOnline = JsonConvert.DeserializeObject<List<Challenge>>(json);
+        return saveChallengeOnline;
+    }
 }
