@@ -4,19 +4,36 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
+public static class RectTransformExtensions
+{
+    public static void SetLeft(this RectTransform rt, float left)
+    {
+        rt.offsetMin = new Vector2(left, rt.offsetMin.y);
+    }
+     
+    public static void SetRight(this RectTransform rt, float right)
+    {
+        rt.offsetMax = new Vector2(-right, rt.offsetMax.y);
+    }
+}
+
 public class progressCore : MonoBehaviour {
     [SerializeField] private Sprite circleSprite;
     public Text Name;
     public Text startDate, endDate;
     public RectTransform canvas;
     public RectTransform graphContainer;
-    public RectTransform chartContainer;
     public Text number;
     float H, W;
 
-    public List<info> difficulty = new List<info>();
-	public List<info> time = new List<info>();
-	public List<info> feeling = new List<info>();
+    public RectTransform chartContainer;
+    public RectTransform[] bars = new RectTransform[3];
+    info[][] categories = new info[][] 
+        {
+            new info[] {new info("Easy", 0.33), new info("Hard", 0.33)}, 
+            new info[] {new info("Short", 0.33), new info("Long", 0.33)}, 
+            new info[] {new info("Bad", 0.33), new info("Good", 0.33)}, 
+        };
 
     // Start is called before the first frame update
     
@@ -34,28 +51,19 @@ public class progressCore : MonoBehaviour {
             List<int> list = ConvertToGraph(record[challengeName]);
             showGraph(list);
         }
-
-		info []Diff = new info[3] {new info("Easy", 0.33), new info("Medium", 0.33), new info("Hard", 0.34)};
-		info []Time = new info[3] {new info("Short", 0.33), new info("Medium", 0.33), new info("Long", 0.34)};
-		info []Feel = new info[3] {new info("Bad", 0.33), new info("Normal", 0.33), new info("Good", 0.34)};
-		difficulty.AddRange(Diff);
-	    time.AddRange(Time);
-	    feeling.AddRange(Feel);
+        buildChart();
+        
     }
 
     public class info
 	{
 		public string level;
 		public double percent;
-
 		public info(string Level, double Percent)
 		{
 			level = Level;
 			percent = Percent;
 		}
-
-	
-	    
 	}
 
     private List<int> ConvertToGraph(List<DailyRecord> record) {
@@ -182,4 +190,37 @@ public class progressCore : MonoBehaviour {
     //Monk's part
 
 
+
+    private void buildChart()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            bool[] check = new bool[2] {true, true};
+            for (int j = 0; j < 2; j++)
+            {
+                RectTransform bar = (RectTransform)bars[i].GetChild(j);
+                if (categories[i][j].percent == 0) 
+                {
+                    bar.transform.localScale = new Vector3(0,0,0);
+                    check[j] = false;
+                }
+                else
+                {
+                    if (j == 1)
+                    {
+                        bar.SetRight((float)(500 - (500*categories[i][j].percent)));
+                    }
+                    else
+                    {
+                        bar.SetLeft((float)(500 - (500*categories[i][j].percent)));
+                    }
+                }
+            }
+
+            if (check == new bool[2] {false, false})
+            {
+                bars[i].transform.localScale = new Vector3(0,0,0);
+            }
+        }
+    }
 }
