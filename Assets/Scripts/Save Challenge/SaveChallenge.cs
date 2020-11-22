@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SaveChallenge : MonoBehaviour
+public class SaveChallenge1 : MonoBehaviour
 {
     public GameObject container;
     public GameObject template;
 
     private UserData user;
-    public void LoadChallengeInfo()
+    public void LoadChallengeInfo1()
     {
         user = UserData.LoadUserData();
         List<Challenge> challengeList = Challenge.LoadSaveChallenge();

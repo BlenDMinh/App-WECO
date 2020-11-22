@@ -10,9 +10,16 @@ public class progressCore : MonoBehaviour {
     public Text startDate, endDate;
     public RectTransform canvas;
     public RectTransform graphContainer;
+    public RectTransform chartContainer;
     public Text number;
-    // Start is called before the first frame update
     float H, W;
+
+    public List<info> difficulty = new List<info>();
+	public List<info> time = new List<info>();
+	public List<info> feeling = new List<info>();
+
+    // Start is called before the first frame update
+    
 
     [Obsolete]
     void Start() {
@@ -27,7 +34,29 @@ public class progressCore : MonoBehaviour {
             List<int> list = ConvertToGraph(record[challengeName]);
             showGraph(list);
         }
+
+		info []Diff = new info[3] {new info("Easy", 0.33), new info("Medium", 0.33), new info("Hard", 0.34)};
+		info []Time = new info[3] {new info("Short", 0.33), new info("Medium", 0.33), new info("Long", 0.34)};
+		info []Feel = new info[3] {new info("Bad", 0.33), new info("Normal", 0.33), new info("Good", 0.34)};
+		difficulty.AddRange(Diff);
+	    time.AddRange(Time);
+	    feeling.AddRange(Feel);
     }
+
+    public class info
+	{
+		public string level;
+		public double percent;
+
+		public info(string Level, double Percent)
+		{
+			level = Level;
+			percent = Percent;
+		}
+
+	
+	    
+	}
 
     private List<int> ConvertToGraph(List<DailyRecord> record) {
         startDate.text = record[0].date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
@@ -149,4 +178,8 @@ public class progressCore : MonoBehaviour {
         r.sizeDelta = new Vector2(50 * canvas.localScale.x, 50 * canvas.localScale.y);
         r.anchoredPosition = new Vector2(-W * 0.55f, y);
     }
+    
+    //Monk's part
+
+
 }
