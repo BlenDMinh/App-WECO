@@ -31,9 +31,9 @@ public class progressCore : MonoBehaviour {
     public RectTransform[] bars = new RectTransform[3];
     info[][] categories = new info[][] 
         {
-            new info[] {new info("Easy", 0.33), new info("Hard", 0.33)}, 
-            new info[] {new info("Short", 0.33), new info("Long", 0.33)}, 
-            new info[] {new info("Bad", 0.33), new info("Good", 0.33)}, 
+            new info[] {new info("Easy", 0), new info("Normal", 0.25), new info("Hard", 0.75)}, 
+            new info[] {new info("Short", 0.5), new info("Average", 0), new info("Long", 00.5)}, 
+            new info[] {new info("Bad", 0.33), new info("Good", 0.34), new info("Amazing", 0.33)}, 
         };
 
     // Start is called before the first frame update
@@ -58,11 +58,11 @@ public class progressCore : MonoBehaviour {
 
     public class info
 	{
-		public string level;
+		public string str;
 		public double percent;
-		public info(string Level, double Percent)
+		public info(string Str, double Percent)
 		{
-			level = Level;
+			str = Str;
 			percent = Percent;
 		}
 	}
@@ -190,35 +190,34 @@ public class progressCore : MonoBehaviour {
     
     private void buildChart()
     {
-        for (int i = 0; i < 3; i++)
+        for (int bar = 0; bar < 3; bar++) //xét trên từng thanh
         {
-            bool[] check = new bool[2] {true, true};
-            for (int j = 0; j < 2; j++)
+            for (int cat = 0; cat < 3; cat++) //xét trên 3 category
             {
-                RectTransform bar = (RectTransform)bars[i].GetChild(j);
-                if (categories[i][j].percent == 0) 
+                RectTransform Bar = (RectTransform)bars[bar].GetChild(cat); //
+                info Category = categories[bar][cat];
+                if (Category.percent > 0) 
                 {
-                    bar.transform.localScale = new Vector3(0,0,0);
-                    check[j] = false;
-                }
-                else
-                {
-                    if (j == 1)
+                    // Text texty = Bar.GetComponent<Text>();
+                    // texty.text = Category.str;
+                    if (cat == 0)
                     {
-                        bar.SetRight((float)(500 - (500*categories[i][j].percent)));
-                        bar.SetLeft(0);
+                        Bar.SetLeft(0);
+                        Bar.SetRight((float)(500 - (500*Category.percent)));
                     }
-                    else
+                    if (cat == 1)
                     {
-                        bar.SetLeft((float)(500 - (500*categories[i][j].percent)));
-                        bar.SetRight(0);
+                        float left = (float)(500*categories[bar][cat - 1].percent <= 250? 500*categories[bar][cat - 1].percent : 250);
+                        float right = (float)(500*categories[bar][cat + 1].percent <= 250? 500*categories[bar][cat + 1].percent : 250);
+                        Bar.SetLeft(left);
+                        Bar.SetRight(right);
+                    }
+                    if (cat == 2)
+                    {
+                        Bar.SetLeft((float)(500 - (500*Category.percent)));
+                        Bar.SetRight(0);
                     }
                 }
-            }
-
-            if (check == new bool[2] {false, false})
-            {
-                bars[i].transform.localScale = new Vector3(0,0,0);
             }
         }
     }
