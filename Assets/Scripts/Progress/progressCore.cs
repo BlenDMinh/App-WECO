@@ -17,6 +17,7 @@ public static class RectTransformExtensions
     }
 }
 
+
 public class progressCore : MonoBehaviour {
     [SerializeField] private Sprite circleSprite;
     public Text Name;
@@ -187,10 +188,6 @@ public class progressCore : MonoBehaviour {
         r.anchoredPosition = new Vector2(-W * 0.55f, y);
     }
     
-    //Monk's part
-
-
-
     private void buildChart()
     {
         for (int i = 0; i < 3; i++)
@@ -209,10 +206,12 @@ public class progressCore : MonoBehaviour {
                     if (j == 1)
                     {
                         bar.SetRight((float)(500 - (500*categories[i][j].percent)));
+                        bar.SetLeft(0);
                     }
                     else
                     {
                         bar.SetLeft((float)(500 - (500*categories[i][j].percent)));
+                        bar.SetRight(0);
                     }
                 }
             }
