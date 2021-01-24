@@ -59,36 +59,49 @@ public class TaskElement : MonoBehaviour {
 
     //===============Monk======================================//
     
-    private Sprite type; //the type of challenge ie: plastic bottles, plastic bags...
-    private string Title;
+    private string Title_s; //current title
+    private int currentDifficulty = 0; //current task difficulty
+    Color[] diffColor = new Color[3]{
+        Color.cyan, Color.yellow, Color.red
+    };
 
-    private Sprite GetType() {
-    	return this.type;
+    private void setcurrentDifficulty(int newdif) {
+    	this.currentDifficulty = newdif;
+    }
+    private int getcurrentDifficulty(){
+    	return this.currentDifficulty;
     }
 
-    private void SetType(Sprite newtype) {
-    	this.type = newtype;
-    }
 
     private void InitTaskElement() {
         //Display TaskElement on Unity
         //Examples: set 'reward' as Text to view on a Unity scene
-        //...
 
-    	Canvas taskbar = gameObject.GetComponent<Canvas>(); //main canvas
-    	Text[] texts = taskbar.GetComponents<Text>(); //2 text: Reward 0, Title 1
-    	Image[] images = taskbar.GetComponents<Image>(); //2 sprites: feesh 0, type 1
+    	Canvas taskbar = this.gameObject.GetComponent<Canvas>();
+    	Image fish = this.gameObject.transform.GetChild(0).GetComponent<Image>();
+    	Text currentReward = fish.transform.GetChild(0).GetComponent<Text>();
+    	Text Title_t = this.gameObject.transform.GetChild(1).GetComponent<Text>();
 
-    	texts[0].text = reward.ToString(); //reward
-    	texts[1].text = Title; //title
-    	
-    	images[1].sprite = type; //type of challange
+    	Title_t.text = this.Title_s;
+    	currentReward.text = this.reward.ToString();
+    	fish.color = diffColor[currentDifficulty];
+
+    	if (!this.selection){
+    		fish.enabled = true;
+    	}
     }
     
     
     public void TaskBar_Selected(){
-    	this.selection = true;
-    	//script that leads to difficulty scene
+    	Image fish = this.gameObject.transform.GetChild(0).GetComponent<Image>();
+    	this.selection = !this.selection;
+    	if (this.selection) {
+    		//script that leads to difficulty scene here
+    		fish.enabled = true;
+    	} 
+    	if (!this.selection){
+    		fish.enabled = false;
+    	}
     }
     
     //===============Monk=====================================//
