@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+
 public class Challenge {
     public string challengeName, challengeDescription;
 	public float bgW = 1000, bgH = 1000;
