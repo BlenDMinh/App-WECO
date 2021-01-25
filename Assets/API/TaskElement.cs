@@ -61,7 +61,7 @@ public class TaskElement : MonoBehaviour {
     
     private string Title_s; //current title
     private int currentDifficulty = 0; //current task difficulty
-    Color[] diffColor = new Color[3]{
+    private Color[] diffColor = new Color[3]{
         Color.cyan, Color.yellow, Color.red
     };
 
@@ -77,7 +77,7 @@ public class TaskElement : MonoBehaviour {
         //Display TaskElement on Unity
         //Examples: set 'reward' as Text to view on a Unity scene
 
-    	Canvas taskbar = this.gameObject.GetComponent<Canvas>();
+    	Image taskbar = this.gameObject.GetComponent<Image>();
     	Image fish = this.gameObject.transform.GetChild(0).GetComponent<Image>();
     	Text currentReward = fish.transform.GetChild(0).GetComponent<Text>();
     	Text Title_t = this.gameObject.transform.GetChild(1).GetComponent<Text>();
