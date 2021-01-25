@@ -16,6 +16,7 @@ public class TaskElement : MonoBehaviour {
     //Number of fish receive;
     private int reward;
 
+
     //Set current status: Selected / Deselected
     public void SetSelection(bool status) {
         selection = status;
