@@ -13,7 +13,11 @@ public class TaskElement : MonoBehaviour {
     //List of task difficulties user can choose (currently string)
     private List<string> taskDifficulties;
 
-    //Number of fish receive;
+    private string story;
+
+    private string title; //current title
+
+    //Number of fishImage receive;
     private int reward;
 
 
@@ -43,15 +47,38 @@ public class TaskElement : MonoBehaviour {
         return reward;
     }
 
+    public void SetStory(string story) {
+        this.story = story;
+    }
+
+    public string GetStory() {
+        return story;
+    }
+
+    public void SetTitle(string title) {
+        this.title = title;
+    }
+
+    public string GetTitle() {
+        return title;
+    }
+
     TaskElement() { }
-    TaskElement(List<String> taskDifficulties, int reward) {
+    TaskElement(List<string> taskDifficulties, int reward) {
         this.taskDifficulties = taskDifficulties;
+        this.reward = reward;
+    }
+
+    TaskElement(List<string> taskDifficulties, string story, int reward) {
+        this.taskDifficulties = taskDifficulties;
+        this.story = story;
         this.reward = reward;
     }
 
     private void cloneTaskElement(TaskElement taskElement) {
         taskDifficulties = taskElement.taskDifficulties;
         reward = taskElement.reward;
+        story = taskElement.story;
     }
 
     TaskElement(TaskElement taskElement) {
@@ -59,52 +86,52 @@ public class TaskElement : MonoBehaviour {
     }
 
     //===============Monk======================================//
+
     
-    private string Title_s; //current title
     private int currentDifficulty = 0; //current task difficulty
     private Color[] diffColor = new Color[3]{
         Color.cyan, Color.yellow, Color.red
     };
 
-    private void setcurrentDifficulty(int newdif) {
-    	this.currentDifficulty = newdif;
+    private void SetCurrentDifficulty(int newdif) {
+        currentDifficulty = newdif;
     }
-    private int getcurrentDifficulty(){
-    	return this.currentDifficulty;
+    private int GetCurrentDifficulty() {
+        return currentDifficulty;
     }
 
+    [SerializeField]
+    private Image taskBarImage, fishImage;
+
+    [SerializeField]
+    Text currentReward, Title_t;
 
     private void InitTaskElement() {
         //Display TaskElement on Unity
         //Examples: set 'reward' as Text to view on a Unity scene
 
-    	Image taskbar = this.gameObject.GetComponent<Image>();
-    	Image fish = this.gameObject.transform.GetChild(0).GetComponent<Image>();
-    	Text currentReward = fish.transform.GetChild(0).GetComponent<Text>();
-    	Text Title_t = this.gameObject.transform.GetChild(1).GetComponent<Text>();
+        Title_t.text = this.title;
+        currentReward.text = this.reward.ToString();
+        fishImage.color = diffColor[currentDifficulty];
 
-    	Title_t.text = this.Title_s;
-    	currentReward.text = this.reward.ToString();
-    	fish.color = diffColor[currentDifficulty];
+        if (!this.selection) {
+            fishImage.enabled = true;
+        }
+    }
 
-    	if (!this.selection){
-    		fish.enabled = true;
-    	}
+
+    public void taskBarImage_Selected() {
+        Image fishImage = this.gameObject.transform.GetChild(0).GetComponent<Image>();
+        this.selection = !this.selection;
+        if (this.selection) {
+            //script that leads to difficulty scene here
+            fishImage.enabled = true;
+        }
+        if (!this.selection) {
+            fishImage.enabled = false;
+        }
     }
-    
-    
-    public void TaskBar_Selected(){
-    	Image fish = this.gameObject.transform.GetChild(0).GetComponent<Image>();
-    	this.selection = !this.selection;
-    	if (this.selection) {
-    		//script that leads to difficulty scene here
-    		fish.enabled = true;
-    	} 
-    	if (!this.selection){
-    		fish.enabled = false;
-    	}
-    }
-    
+
     //===============Monk=====================================//
 
 
@@ -114,7 +141,7 @@ public class TaskElement : MonoBehaviour {
     }
 
     //Call this when you want to sync all Unity Element with current TaskElement (if changed)
-    private void UpdateTaskElement(TaskElement taskElement) {
+    public void UpdateTaskElement(TaskElement taskElement) {
         cloneTaskElement(taskElement);
         InitTaskElement();
     }

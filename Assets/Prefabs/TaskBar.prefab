@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 1346075701530185256}
   - component: {fileID: 7711510494454439373}
   m_Layer: 0
-  m_Name: Taskbar
+  m_Name: TaskBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,6 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd90fd8a5c448c43b15f23dc9dbcf27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskBarImage: {fileID: 264917892034521559}
+  fishImage: {fileID: 6272002419292054013}
+  currentReward: {fileID: 1627779004059784772}
+  Title_t: {fileID: 7722547316853459099}
 --- !u!114 &7711510494454439373
 MonoBehaviour:
   m_ObjectHideFlags: 0
