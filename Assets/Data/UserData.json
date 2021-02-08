@@ -6,12 +6,62 @@
         "Plastic bags" : [
             {
                 "date" : "2020-11-15T00:00:00+07:00",
-                "taskCount" : 24,
+                "taskCount" : 14,
                 "fishCount" : 24
             },
             {
                 "date" : "2020-11-18T00:00:00+07:00",
                 "taskCount" : 3,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-19T00:00:00+07:00",
+                "taskCount" : 16,
+                "fishCount" : 6
+            },
+            {
+                "date" : "2020-11-20T00:00:00+07:00",
+                "taskCount" : 1,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-22T00:00:00+07:00",
+                "taskCount" : 9,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-23T00:00:00+07:00",
+                "taskCount" : 10,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-24T00:00:00+07:00",
+                "taskCount" : 9,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-26T00:00:00+07:00",
+                "taskCount" : 10,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-27T00:00:00+07:00",
+                "taskCount" : 3,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-11-30T00:00:00+07:00",
+                "taskCount" : 3,
+                "fishCount" : 2
+            },
+            {
+                "date" : "2020-12-1T00:00:00+07:00",
+                "taskCount" : 9,
+                "fishCount" : 3
+            },
+            {
+                "date" : "2020-12-2T00:00:00+07:00",
+                "taskCount" : 10,
                 "fishCount" : 3
             }
         ]

@@ -41,8 +41,6 @@ public class progressCore : MonoBehaviour {
 
     [Obsolete]
     void Start() {
-
-
         H = graphContainer.sizeDelta.y;
         W = graphContainer.sizeDelta.x;
         string challengeName = Challenge.LoadCurrentChallenge().challengeName;
@@ -50,10 +48,12 @@ public class progressCore : MonoBehaviour {
         SortedDictionary<string, List<DailyRecord>> record = UserData.LoadUserData().record;
         if (record.ContainsKey(challengeName)) {
             List<int> list = ConvertToGraph(record[challengeName]);
+            Debug.Log("Graph contain:\n");
+            foreach (int i in list)
+                Debug.Log(i);
             showGraph(list);
         }
         buildChart();
-        
     }
 
     public class info
@@ -80,6 +80,7 @@ public class progressCore : MonoBehaviour {
             }
             fishCount += dr.fishCount;
             res.Add(dr.taskCount);
+            date = date.AddDays(1);
         }
         number.text = fishCount.ToString();
         return res;
