@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,98 +5,48 @@ using UnityEngine.UI;
 public class TaskElement : MonoBehaviour {
     //===============BlenDMinh===========DO NOT TOUCH===========//
 
+    //Index of this TaskElement
+    public int id;
+
     //selection = true if this TaskElement is selected
     private bool selection = false;
 
+    public string story, title; //current title
+
     //List of task difficulties user can choose (currently string)
-    private List<string> taskDifficulties;
-
-    private string story;
-
-    private string title; //current title
-
+    public List<string> taskDifficulties;
     //Number of fishImage receive;
-    private int reward;
+    public List<int> reward;
 
+    //TaskElement() { }
 
-    //Set current status: Selected / Deselected
-    public void SetSelection(bool status) {
-        selection = status;
-    }
-    public bool isSelected() {
-        return selection;
-    }
-
-    //Set the task difficuties for this TaskElement
-    public void SetTaskDifficulties(List<string> gimmeAList) {
-        taskDifficulties = gimmeAList;
-    }
-
-    //Get...........
-    public List<String> GetTaskDifficulties() {
-        return taskDifficulties;
-    }
-
-    //Set and get...what u know already
-    public void SetReward(int reward) {
-        this.reward = reward;
-    }
-    public int GetReward() {
-        return reward;
-    }
-
-    public void SetStory(string story) {
-        this.story = story;
-    }
-
-    public string GetStory() {
-        return story;
-    }
-
-    public void SetTitle(string title) {
+    /*TaskElement(int index, string title, string story, List<string> taskDifficulties, List<int> reward) {
+        id = index;
         this.title = title;
-    }
-
-    public string GetTitle() {
-        return title;
-    }
-
-    TaskElement() { }
-    TaskElement(List<string> taskDifficulties, int reward) {
-        this.taskDifficulties = taskDifficulties;
-        this.reward = reward;
-    }
-
-    TaskElement(List<string> taskDifficulties, string story, int reward) {
-        this.taskDifficulties = taskDifficulties;
         this.story = story;
+        this.taskDifficulties = taskDifficulties;
         this.reward = reward;
-    }
+    }*/
 
-    private void cloneTaskElement(TaskElement taskElement) {
+    public void cloneTaskElement(TaskElement taskElement) {
+        id = taskElement.id;
+        title = taskElement.title;
         taskDifficulties = taskElement.taskDifficulties;
         reward = taskElement.reward;
         story = taskElement.story;
     }
 
-    TaskElement(TaskElement taskElement) {
+    /*TaskElement(TaskElement taskElement) {
         cloneTaskElement(taskElement);
-    }
+    }*/
 
     //===============Monk======================================//
 
     
-    private int currentDifficulty = 0; //current task difficulty
+    public int currentDifficulty = 0; //current task difficulty
     private Color[] diffColor = new Color[3]{
         Color.cyan, Color.yellow, Color.red
     };
-
-    private void SetCurrentDifficulty(int newdif) {
-        currentDifficulty = newdif;
-    }
-    private int GetCurrentDifficulty() {
-        return currentDifficulty;
-    }
 
     [SerializeField]
     private Image taskBarImage, fishImage;
@@ -110,11 +58,12 @@ public class TaskElement : MonoBehaviour {
         //Display TaskElement on Unity
         //Examples: set 'reward' as Text to view on a Unity scene
 
-        Title_t.text = this.title;
-        currentReward.text = this.reward.ToString();
+        if(title != null)
+            Title_t.text = title;
+        currentReward.text = "0"; //default is unselected so there will be no fish award
         fishImage.color = diffColor[currentDifficulty];
 
-        if (!this.selection) {
+        if (!selection) {
             fishImage.enabled = true;
         }
     }
