@@ -8,68 +8,25 @@ public class TaskElement : MonoBehaviour {
     //===============BlenDMinh===========DO NOT TOUCH===========//
 
     //selection = true if this TaskElement is selected
-    private bool selection = false;
+    public bool selection = false;
 
     //List of task difficulties user can choose (currently string)
-    private List<string> taskDifficulties;
+    public List<string> taskDifficulties;
 
-    private string story;
+    public string story;
 
-    private string title; //current title
+    public string title; //current title
 
     //Number of fishImage receive;
-    private int reward;
-
-
-    //Set current status: Selected / Deselected
-    public void SetSelection(bool status) {
-        selection = status;
-    }
-    public bool isSelected() {
-        return selection;
-    }
-
-    //Set the task difficuties for this TaskElement
-    public void SetTaskDifficulties(List<string> gimmeAList) {
-        taskDifficulties = gimmeAList;
-    }
-
-    //Get...........
-    public List<String> GetTaskDifficulties() {
-        return taskDifficulties;
-    }
-
-    //Set and get...what u know already
-    public void SetReward(int reward) {
-        this.reward = reward;
-    }
-    public int GetReward() {
-        return reward;
-    }
-
-    public void SetStory(string story) {
-        this.story = story;
-    }
-
-    public string GetStory() {
-        return story;
-    }
-
-    public void SetTitle(string title) {
-        this.title = title;
-    }
-
-    public string GetTitle() {
-        return title;
-    }
+    public List<int> reward;
 
     TaskElement() { }
-    TaskElement(List<string> taskDifficulties, int reward) {
+    TaskElement(List<string> taskDifficulties, List<int> reward) {
         this.taskDifficulties = taskDifficulties;
         this.reward = reward;
     }
 
-    TaskElement(List<string> taskDifficulties, string story, int reward) {
+    TaskElement(List<string> taskDifficulties, string story, List<int> reward) {
         this.taskDifficulties = taskDifficulties;
         this.story = story;
         this.reward = reward;
