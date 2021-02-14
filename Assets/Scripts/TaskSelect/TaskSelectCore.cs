@@ -14,8 +14,12 @@ public class TaskSelectCore : MonoBehaviour {
         for(int i = 0; i < 6; i++) {
             GameObject taskElementObj = UIHelper.PushAndGetPrefabToParent(taskElementPrefab, taskBoard.transform, 0);
             TaskElement taskElement = taskElementObj.GetComponent<TaskElement>();
+            taskElement.id = i;
+            taskElement.taskDifficulties.Add(i.ToString("0"));
+            taskElement.UpdateTaskElement_ALL(taskElement);
 
-            taskElement.UpdateTaskElement(taskElement);
+            // Init selection (default -1 for this TE)
+            TaskSelectDataManager.Instance.selection.Add(-1);
         }
     }
 

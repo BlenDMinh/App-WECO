@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Task\taskCore.cs" />
     <Compile Include="Assets\Scripts\TaskSelect\ButtonsController.cs" />
     <Compile Include="Assets\Scripts\TaskSelect\TaskSelectCore.cs" />
+    <Compile Include="Assets\Scripts\TaskSelect\TaskSelectDataManager.cs" />
     <Compile Include="Assets\Scripts\toScene.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />

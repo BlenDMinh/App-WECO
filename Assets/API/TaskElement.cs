@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class TaskElement : MonoBehaviour {
     //===============BlenDMinh===========DO NOT TOUCH===========//
 
+    public int id; // Task Element id
+
     //selection = true if this TaskElement is selected
     public bool selection = false;
-
+    
     //List of task difficulties user can choose (currently string)
     public List<string> taskDifficulties;
 
@@ -76,17 +78,23 @@ public class TaskElement : MonoBehaviour {
         }
     }
 
-
-    public void taskBarImage_Selected() {
+    //On this Task Element select
+    //script that leads to difficulty scene here
+    public void onSelected() {
         Image fishImage = this.gameObject.transform.GetChild(0).GetComponent<Image>();
         this.selection = !this.selection;
         if (this.selection) {
-            //script that leads to difficulty scene here
             fishImage.enabled = true;
         }
         if (!this.selection) {
             fishImage.enabled = false;
         }
+
+        // BlenD part
+        TaskSelectDataManager.Instance.currentTE_ID = id;
+
+        // TO-DO: OPEN Task Config Panel
+
     }
 
     //===============Monk=====================================//
@@ -98,17 +106,12 @@ public class TaskElement : MonoBehaviour {
     }
 
     //Call this when you want to sync all Unity Element with current TaskElement (if changed)
-    public void UpdateTaskElement(TaskElement taskElement) {
+    public void UpdateTaskElement_ALL(TaskElement taskElement) {
         cloneTaskElement(taskElement);
         InitTaskElement();
     }
 
-    private bool lastSelection;
-    private bool onSelectionChange(bool selection) {
-        if (selection != lastSelection) {
-            lastSelection = selection;
-            return true;
-        }
-        return false;
+    public void UpdateTaskElement_Appearance() {
+        InitTaskElement();
     }
 }
