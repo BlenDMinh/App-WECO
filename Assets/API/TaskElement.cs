@@ -71,7 +71,7 @@ public class TaskElement : MonoBehaviour {
 
         Title_t.text = this.title;
         currentReward.text = this.reward.ToString();
-        fishImage.color = diffColor[currentDifficulty];
+        //fishImage.color = diffColor[currentDifficulty];
 
         if (!this.selection) {
             fishImage.enabled = true;
