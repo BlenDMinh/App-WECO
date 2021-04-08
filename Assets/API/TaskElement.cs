@@ -83,16 +83,16 @@ public class TaskElement : MonoBehaviour {
     public void onSelected() {
         Image fishImage = this.gameObject.transform.GetChild(0).GetComponent<Image>();
         this.selection = !this.selection;
-        if (this.selection) {
-            fishImage.enabled = true;
+        /*if (this.selection) {
+            fishImage.gameObject.SetActive(true);
         }
         if (!this.selection) {
-            fishImage.enabled = false;
-        }
+            fishImage.gameObject.SetActive(false);
+        }*/
 
         // BlenD part
         TaskSelectDataManager.Instance.currentTE_ID = id;
-
+        Debug.Log("Select Task Element " + id + "!");
         // TO-DO: OPEN Task Config Panel
 
     }

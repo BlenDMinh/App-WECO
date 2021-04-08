@@ -1,0 +1,32 @@
+[
+{
+  "title" : "Store your bags",
+  "story" : "Plastic bag everywhere Yet it's a harmful ware What can we do about this?  Maybe just store it somewhere",
+  "taskDifficulties" : [
+    "Pack up 3 nylon bags and put it in your backpack, so that you can use it the next time you go shopping!",
+    "Set up a place in the house where your personal nylon bags can be stored, take some when you need it.",
+    "Set up a place in the house where ALL nylon bags can be stored, take some when you need it. Invite people living with you to do the same!"
+    ],
+    "reward" : [1, 3, 6]
+},
+{
+  "title" : "How about reusable bottles?",
+  "story" : "Do you have water bottles in your house that aren't made of plastic? Remember, reusing bottles is good but when it comes to plastic bottles, it is harmful for your health to reuse. But any other materials would work! And you don't have to buy anything new, just pick a bottle you want.",
+  "taskDifficulties" : [
+    "Write down 3 alternatives to using bottles made of plastic (e.g. different types of bottles)",
+    "Pick 1 watter bottle you want to use for a long time. After at least 3 days of sticking to it, you can press complete!",
+    "Gift 3 people reusable bottles."
+    ],
+    "reward" : [1, 4, 6]
+},
+{
+  "title" : "Store your bags",
+  "story" : "Plastic bag everywhere Yet it's a harmful ware What can we do about this?  Maybe just store it somewhere",
+  "taskDifficulties" : [
+    "The next time you order a beverage, remember to refuse that one straw",
+    "Find out about 3 other type of straws (straws made of other materials). Then write them down in your JOURNAL's alternative checklist.",
+    "If you can, support green businesses by buying a personal reusable straw."
+    ],
+    "reward" : [1, 3, 4]
+}
+]
