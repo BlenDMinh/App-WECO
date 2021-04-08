@@ -9,22 +9,19 @@ public class TaskSelectCore : MonoBehaviour {
     private GameObject taskBoard, overallTasksBoard, taskElementPrefab;
 
     void Start() {
-        List<TaskElement> taskElements = new List<TaskElement>();
 
         //tempo read
-        string json = (Resources.Load("taskSelect") as TextAsset).text;      
-        taskElements = JsonConvert.DeserializeObject<List<TaskElement>>(json);
+        string json = (Resources.Load("taskSelect") as TextAsset).ToString();
+        List<TaskElement> teList =
+        TaskSelectDataManager.Instance.taskElements = JsonConvert.DeserializeObject<List<TaskElement>>(json);
 
         int i = 0;
-        foreach(TaskElement te in taskElements) {
-            Debug.Log(te);
+        foreach(TaskElement te in teList) {
             GameObject taskElementObj = UIHelper.PushAndGetPrefabToParent(taskElementPrefab, taskBoard.transform, 0); // offset is 0 because Canvas Group is doing everything for us OwO
-            TaskElement taskElement = taskElementObj.GetComponent<TaskElement>();
-            taskElement = te;
-            taskElement.id = i;
-            i++;
-            taskElement.UpdateTaskElement_ALL(taskElement);
 
+            TaskElement taskElement = taskElementObj.GetComponent<TaskElement>();
+            te.id = i++;
+            taskElement.UpdateTaskElement_ALL(te);
             // Init selection (default -1 for this TE)
             TaskSelectDataManager.Instance.selection.Add(-1);
         }

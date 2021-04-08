@@ -229,7 +229,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Slay BlenDMinh
+  m_Text: Set up a place in the house where ALL nylon bags can be stored, take some
+    when you need it. Invite people living with you to do the same!
 --- !u!114 &2947236587732205069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +258,7 @@ GameObject:
   - component: {fileID: 2947236588200510147}
   - component: {fileID: 2947236588200510146}
   - component: {fileID: 2947236588200510149}
-  - component: {fileID: 2947236588200510148}
+  - component: {fileID: 1363223241}
   m_Layer: 5
   m_Name: diff
   m_TagString: Untagged
@@ -390,7 +391,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &2947236588200510148
+--- !u!114 &1363223241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -480,4 +481,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EASY
+  m_Text: 6

@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +34,8 @@ public class TaskElement : MonoBehaviour {
     }
 
     private void cloneTaskElement(TaskElement taskElement) {
+        id = taskElement.id;
+        title = taskElement.title;
         taskDifficulties = taskElement.taskDifficulties;
         reward = taskElement.reward;
         story = taskElement.story;
@@ -69,8 +70,8 @@ public class TaskElement : MonoBehaviour {
         //Display TaskElement on Unity
         //Examples: set 'reward' as Text to view on a Unity scene
 
-        Title_t.text = this.title;
-        currentReward.text = this.reward.ToString();
+        Title_t.text = title;
+        currentReward.text = "0";
         //fishImage.color = diffColor[currentDifficulty];
 
         if (!this.selection) {
