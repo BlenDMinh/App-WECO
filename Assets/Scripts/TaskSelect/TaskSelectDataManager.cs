@@ -52,9 +52,9 @@ public class TaskSelectDataManager : MonoBehaviour {
             int reward = taskElement.reward[id];
             diffSelection.transform.GetChild(0).GetComponent<Text>().text = dif;
             diffSelection.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = reward.ToString();
-            UIHelper.PushPrefabToParent(diffSelection, diffList.transform, 0);
+            GameObject dS = UIHelper.PushAndGetPrefabToParent(diffSelection, diffList.transform, 30);
+            dS.GetComponent<RectTransform>().sizeDelta = new Vector2(dS.GetComponent<RectTransform>().sizeDelta.x, dS.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y);
+            Debug.Log(dS.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y);
         }
-        diffList.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        diffList.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 }
