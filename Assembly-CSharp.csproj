@@ -69,6 +69,7 @@
     <Compile Include="Assets\API\DynamicTextBehavior.cs" />
     <Compile Include="Assets\API\IMG2Sprite.cs" />
     <Compile Include="Assets\API\InvertedMaskImage.cs" />
+    <Compile Include="Assets\API\PostElement.cs" />
     <Compile Include="Assets\API\Reward.cs" />
     <Compile Include="Assets\API\Submission.cs" />
     <Compile Include="Assets\API\Task.cs" />
