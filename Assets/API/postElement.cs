@@ -6,17 +6,18 @@ using UnityEngine.UI;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-	public class postElement {
+	public class PostElement {
         public Image userAvatar { get; set; } 
         public Image postImage { get; set; }
         public string userName { get; set; } 
         public string postText { get; set; } 
         public string Address { get; set; } 
 
-        public postElement loadAddress(){
+        public PostElement loadAddress(string address){
+            Address = address;
 	        StreamReader r = new StreamReader(Address);
 			string json = r.ReadToEnd();
-			postElement res = JsonConvert.DeserializeObject<postElement>(json);
+			PostElement res = JsonConvert.DeserializeObject<PostElement>(json);
 			r.Close();
 			return res;
         }
