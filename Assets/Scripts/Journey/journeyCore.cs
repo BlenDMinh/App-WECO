@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -20,32 +21,10 @@ public class journeyCore : MonoBehaviour {
         user = UserData.LoadUserData();
         challenge = Challenge.LoadCurrentChallenge();
         bgSprite = Resources.Load<Sprite>("challengeTexture\\" + challenge.challengeName + "_BG");
-        i.gameObject.SetActive(false);
         i.sprite = bgSprite;
         i.GetComponent<RectTransform>().sizeDelta = new Vector2(challenge.bgW, challenge.bgH);
 
-        RectTransform content = scrollback.content;
-        //Set Size of Content to default size
-        //height = (number of tasks + 1) * (20% of Screen.height)
-        content.sizeDelta = new Vector2(Screen.width, (challenge.tasks.Count + 1) * Screen.height * 20 / 100);
-
-        int id = 0, skip = 1;
-        List<bool> progress = UserData.GetChallengeProgress(user, challenge);
-            
-        foreach (Task t in challenge.tasks) {
-            t.id = id;
-            CreateButton(t, bgSprite);
-            if (progress[id]) {
-                CreateHover(t, bgSprite, completed);
-            } else if (skip == 0) {
-                CreateHover(t, bgSprite, forbidden);
-            } else {
-                skip--;
-            }
-            id++;
-        }
-
-
+        StartCoroutine(Init());
     }
 
     private void CreateHover(Task t, Sprite bgSprite, Sprite sprite) {
@@ -55,31 +34,54 @@ public class journeyCore : MonoBehaviour {
         RectTransform r = newImage.GetComponent<RectTransform>();
 
         r.localScale = new Vector2(1, 1);
-        r.sizeDelta = new Vector2(Screen.width * 25 / 100, Screen.width * 25 / 100);
-        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * (t.id + 1) * 20 / 100);
+        r.pivot = new Vector2(0, 1);
+        r.sizeDelta = new Vector2(challenge.btW * 120 / 100, challenge.btH * 120 / 100);
+        r.anchoredPosition = new Vector2((t.x / bgSprite.rect.width) * challenge.bgW - challenge.btW * 10 / 100, -(t.y / bgSprite.rect.height) * challenge.bgH + challenge.btH * 10 / 100);
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
     }
 
-    private void CreateButton(Task t, Sprite bgSprite) {
-        Button newButton = Instantiate(button, scrollback.content);
+    private void CreateButton(Task t) {
+        Vector3 rndPosWithin;
+        rndPosWithin = new Vector3(Random.Range(0.2f, 0.8f) * challenge.bgW, Random.Range(-0.8f, -0.2f) * challenge.bgH, 3);
+        //rndPosWithin = i.transform.TransformPoint(rndPosWithin * .5f);
+
+        Button newButton = Instantiate(button, rndPosWithin, Quaternion.identity, i.transform);
         RectTransform r = newButton.GetComponent<RectTransform>();
 
-        r.localScale = new Vector2(1, 1);
-        r.sizeDelta = new Vector2(Screen.width * 20 / 100, Screen.width * 20 / 100);
-        r.anchoredPosition = new Vector2(Screen.width / 2, -Screen.height * (t.id + 1) * 20 / 100);
-        r.anchorMin = r.anchorMax = new Vector2(0, 1);
-
+        r.sizeDelta = new Vector2(challenge.btW * 2, challenge.btH * 2);
+        r.anchoredPosition = rndPosWithin;
 
         newButton.onClick.AddListener(delegate {
             string writeData = JsonConvert.SerializeObject(t);
             if (Application.platform == RuntimePlatform.Android) {
                 Directory.CreateDirectory(Application.persistentDataPath + "//Data//");
                 File.WriteAllText(Application.persistentDataPath + "//Data//task.json", writeData);
-            } else {
+            }
+            else {
                 Directory.CreateDirectory(Application.dataPath + "//Data//");
                 File.WriteAllText(Application.dataPath + "//Data//task.json", writeData);
             }
             SceneManager.LoadScene("Task", LoadSceneMode.Additive);
         });
+    }
+
+    IEnumerator Init() {
+        yield return 0;
+        RectTransform content = scrollback.content;
+        content.sizeDelta = i.rectTransform.rect.size;
+
+        int id = 0;
+        List<bool> progress = UserData.GetChallengeProgress(user, challenge);
+
+        foreach (Task t in challenge.tasks) {
+            t.id = id;
+            if (!progress[id]) {
+                CreateButton(t);
+            }
+
+            id++;
+            if (id > 8)
+                break;
+        }
     }
 }

@@ -63,6 +63,11 @@
                 "date" : "2020-12-02T00:00:00+07:00",
                 "taskCount" : 10,
                 "fishCount" : 3
+            },
+            {
+                "date" : "2021-04-16T00:00:00+07:00",
+                "taskCount" : 2,
+                "fishCount" : 2
             }
         ]
     },
@@ -81,16 +86,25 @@
                 "plastic bag" : 0
             },
             {},
+            {
+                "fact" : 0
+            },
+            {},
+            {
+                "plastic bag " : 0
+            },
+            {
+                "nylon bag" : 3,
+                "bags put" : 3
+            },
             {},
             {},
             {},
             {},
             {},
-            {},
-            {},
-            {},
-            {},
-            {}
+            {
+                "response" : 5
+            }
         ]
     },
     "challengeProgress" : {
@@ -102,8 +116,8 @@
             false,
             false,
             false,
-            false,
-            false,
+            true,
+            true,
             false,
             false,
             false,
@@ -128,6 +142,16 @@
                 "difficulty" : 2,
                 "time" : 2,
                 "feeling" : 1
+            },
+            {
+                "difficulty" : 3,
+                "time" : 0,
+                "feeling" : 0
+            },
+            {
+                "difficulty" : 0,
+                "time" : 0,
+                "feeling" : 4
             }
         ]
     },

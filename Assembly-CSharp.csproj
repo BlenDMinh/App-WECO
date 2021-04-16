@@ -69,7 +69,7 @@
     <Compile Include="Assets\API\DynamicTextBehavior.cs" />
     <Compile Include="Assets\API\IMG2Sprite.cs" />
     <Compile Include="Assets\API\InvertedMaskImage.cs" />
-    <Compile Include="Assets\API\PostElement.cs" />
+    <Compile Include="Assets\API\postElement.cs" />
     <Compile Include="Assets\API\Reward.cs" />
     <Compile Include="Assets\API\Submission.cs" />
     <Compile Include="Assets\API\Task.cs" />
@@ -148,9 +148,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/Projects/App WECO/App WECO/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>D:/Projects/App WECO/App WECO/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Tools/Coding Tools/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
