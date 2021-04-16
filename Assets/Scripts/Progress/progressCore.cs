@@ -20,15 +20,15 @@ public static class RectTransformExtensions
 
 public class progressCore : MonoBehaviour {
     [SerializeField] private Sprite circleSprite;
-    public Text Name;
-    public Text startDate, endDate;
-    public RectTransform canvas;
-    public RectTransform graphContainer;
-    public Text number;
+    [SerializeField] private Text Name;
+    [SerializeField] private Text startDate, endDate;
+    [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform graphContainer;
+    [SerializeField] private Text number;
     float H, W;
 
-    public RectTransform chartContainer;
-    public RectTransform[] bars = new RectTransform[3];
+    [SerializeField] private RectTransform chartContainer;
+    [SerializeField] private RectTransform[] bars = new RectTransform[3];
     info[][] categories = new info[][] 
         {
             new info[] {new info("Easy", 0), new info("Normal", 0.25), new info("Hard", 0.75)}, 
