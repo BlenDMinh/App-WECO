@@ -25,11 +25,7 @@ public class TaskSelectDataManager : MonoBehaviour {
     [SerializeField]
     Text storyText;
 
-
-    private List<int> lastSelection;
-
     private void Update() {
-        Canvas.ForceUpdateCanvases();
         // Toggle Task Config Panel
         if (currentTE_ID != -1) {
             if (TaskConfigPanel.activeSelf)
@@ -44,17 +40,8 @@ public class TaskSelectDataManager : MonoBehaviour {
             foreach (Transform child in diffList.transform)
                 Destroy(child.gameObject);
         }
-
-        // Check for changes (lastSelection != selection)
-        if(lastSelection != selection) {
-            // Then update the tasks' selection status
-
-        }
-        lastSelection = selection;
     }
 
-    //Init the Config Board
-    List<string> difString = new List<string> { "Easy", "Medium", "Hard" };
     private void FetchConfigBoardWithTaskElement(int currentTE_ID) {
         TaskElement taskElement = taskElements[currentTE_ID];
         storyText.text = taskElement.story;
@@ -65,23 +52,9 @@ public class TaskSelectDataManager : MonoBehaviour {
             int reward = taskElement.reward[id];
             diffSelection.transform.GetChild(0).GetComponent<Text>().text = dif;
             diffSelection.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = reward.ToString();
-            diffSelection.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = difString[id];
-
             GameObject dS = UIHelper.PushAndGetPrefabToParent(diffSelection, diffList.transform, 30);
-            dS.GetComponent<Button>().onClick.AddListener(delegate { DiffSelect(currentTE_ID, id); });
-
-            StartCoroutine(ContentSizeUpdate(dS, dS.transform.GetChild(0).GetComponent<Text>().gameObject));
+            dS.GetComponent<RectTransform>().sizeDelta = new Vector2(dS.GetComponent<RectTransform>().sizeDelta.x, dS.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y);
+            Debug.Log(dS.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y);
         }
-    }
-
-    IEnumerator ContentSizeUpdate(GameObject content, GameObject text) {
-        yield return 0;
-        content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().sizeDelta.x, text.GetComponent<RectTransform>().sizeDelta.y);
-        content.transform.GetChild(1).GetComponent<RectTransform>().ForceUpdateRectTransforms();
-        Debug.Log(text.GetComponent<RectTransform>().sizeDelta.y);
-    }
-
-    void DiffSelect(int id, int dif) {
-        Instance.selection[id] = dif;
     }
 }

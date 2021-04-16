@@ -41,6 +41,6 @@ public class challengeBoardCore : MonoBehaviour {
             Directory.CreateDirectory(Application.dataPath + "//Data//");
             File.WriteAllText(Application.dataPath + "//Data//challenge.json", writeData);
         }
-        SceneManager.LoadScene("TasksSelect");
+        SceneManager.LoadScene("Journey");
     }
 }
