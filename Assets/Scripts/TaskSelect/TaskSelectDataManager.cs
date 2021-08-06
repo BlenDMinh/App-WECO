@@ -60,15 +60,14 @@ public class TaskSelectDataManager : MonoBehaviour {
         storyText.text = taskElement.story;
 
         for (int id = 0; id < taskElement.taskDifficulties.Count; id++) {
-            GameObject diffSelection = Instantiate(diffPrefab);
             string dif = taskElement.taskDifficulties[id];
             int reward = taskElement.reward[id];
-            diffSelection.transform.GetChild(0).GetComponent<Text>().text = dif;
-            diffSelection.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = reward.ToString();
-            diffSelection.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = difString[id];
-
-            GameObject dS = UIHelper.PushAndGetPrefabToParent(diffSelection, diffList.transform, 30);
+            
+            GameObject dS = UIHelper.PushAndGetPrefabToParent(diffPrefab, diffList.transform, 30);
             dS.GetComponent<Button>().onClick.AddListener(delegate { DiffSelect(currentTE_ID, id); });
+            dS.transform.GetChild(0).GetComponent<Text>().text = dif;
+            dS.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = reward.ToString();
+            dS.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = difString[id];
 
             StartCoroutine(ContentSizeUpdate(dS, dS.transform.GetChild(0).GetComponent<Text>().gameObject));
         }

@@ -94,7 +94,7 @@ public class TaskElement : MonoBehaviour {
         // BlenD part
         TaskSelectDataManager.Instance.currentTE_ID = id;
         Debug.Log("Select Task Element " + id + "!");
-        // TO-DO: OPEN Task Config Panel
+        // TO-DO: OPEN Task Config Panel in TaskSelectDataManager: DONE
 
     }
 
