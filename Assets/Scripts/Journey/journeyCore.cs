@@ -18,6 +18,7 @@ public class journeyCore : MonoBehaviour {
     private Challenge challenge;
     private Sprite bgSprite;
     private void Start() {
+        // Load ongoing tasks
         user = UserData.LoadUserData();
         challenge = Challenge.LoadCurrentChallenge();
         bgSprite = Resources.Load<Sprite>("challengeTexture\\" + challenge.challengeName + "_BG");
@@ -42,7 +43,10 @@ public class journeyCore : MonoBehaviour {
 
     private void CreateButton(Task t) {
         Vector3 rndPosWithin;
+
+        //Random position
         rndPosWithin = new Vector3(Random.Range(0.2f, 0.8f) * challenge.bgW, Random.Range(-0.8f, -0.2f) * challenge.bgH, 3);
+
         //rndPosWithin = i.transform.TransformPoint(rndPosWithin * .5f);
 
         Button newButton = Instantiate(button, rndPosWithin, Quaternion.identity, i.transform);
@@ -74,6 +78,8 @@ public class journeyCore : MonoBehaviour {
         List<bool> progress = UserData.GetChallengeProgress(user, challenge);
 
         foreach (Task t in challenge.tasks) {
+
+            // Tạo button cho mỗi Task
             t.id = id;
             if (!progress[id]) {
                 CreateButton(t);

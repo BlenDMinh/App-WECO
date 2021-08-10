@@ -6,9 +6,30 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CommunityCore : MonoBehaviour {
+
+    [SerializeField]
+    private PostHandler postHandler;
+
     void Start() {
-        //DownloadPost();
+        DownloadPosts();
         DownloadImage();
+    }
+
+    private async void DownloadPosts() {
+        bool outOfPost = false;
+        int id = 0;
+        while(!outOfPost) {
+            byte[] output = await FirebaseHelper.DownloadBytes($"/posts/test/{id}.json");
+
+            string json = Encoding.ASCII.GetString(output);
+            Debug.Log(json);
+
+            await postHandler.AddPost(json);
+
+            if (output == null)
+                outOfPost = true;
+            id++;
+        }
     }
 
     private async System.Threading.Tasks.Task DownloadPost() {
@@ -24,8 +45,5 @@ public class CommunityCore : MonoBehaviour {
     private async System.Threading.Tasks.Task DownloadImage() {
         System.Threading.Tasks.Task task = FirebaseHelper.DownloadFile("/images/20210731055838368.png", "D:/test.png");
         await task;
-        Debug.Log("set image");
-        Sprite sprite = IMG2Sprite.LoadNewSprite("D:/test.png");
-        testSprite.sprite = sprite;
     }
 }

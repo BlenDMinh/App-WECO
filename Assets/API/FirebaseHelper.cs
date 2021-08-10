@@ -45,7 +45,6 @@ public class FirebaseHelper : MonoBehaviour {
     }
     
     public async static System.Threading.Tasks.Task DownloadFile(string URL, string localURL) {
-
         if (string.IsNullOrEmpty(URL)) {
             throw new ArgumentException($"'{nameof(URL)}' cannot be null or empty.", nameof(URL));
         }
@@ -55,7 +54,7 @@ public class FirebaseHelper : MonoBehaviour {
         // Download to the local filesystem
         await reference.GetFileAsync(localURL).ContinueWithOnMainThread(task => {
             if (!task.IsFaulted && !task.IsCanceled) {
-                Debug.Log("File downloaded.");
+                Debug.Log($"Finished downloading {URL}!");
             }
         });
     }
@@ -68,7 +67,7 @@ public class FirebaseHelper : MonoBehaviour {
 
         StorageReference reference = storage.RootReference.Child(URL);
 
-        byte[] result = new byte[1 * 1024 * 1024];
+        byte[] result = null;
         // Download to the local filesystem
         await reference.GetBytesAsync(1 * 1024 * 1024).ContinueWithOnMainThread(task => {
             if (task.IsFaulted || task.IsCanceled) {
@@ -78,7 +77,7 @@ public class FirebaseHelper : MonoBehaviour {
             else {
                 byte[] output = task.Result;
                 result = output;
-                Debug.Log("Finished downloading!");
+                Debug.Log($"Finished downloading {URL}!");
             }
         });
 

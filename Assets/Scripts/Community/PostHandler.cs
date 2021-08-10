@@ -3,14 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PostHandler : MonoBehaviour {
 
-    private Upload upload = new Upload();
+    private PostData PostData = new PostData();
 
     // Image Handler
     public void AddImage() { // Open Gallery and add image
@@ -32,15 +32,12 @@ public class PostHandler : MonoBehaviour {
         if (path == null)
             return;
 
-        if (upload.imageNames == null)
-            upload.imageNames = new List<string>();
+        if (PostData.imageNames == null)
+            PostData.imageNames = new List<string>();
 
-        upload.imageNames.Add(path);
-
-        Sprite sprite = IMG2Sprite.LoadNewSprite(path);
-        GameObject image = new GameObject("Image");
+        PostData.imageNames.Add(path);
+        GameObject image = UIHelper.CreateImageObject(path);
         image.transform.SetParent(imgBoard);
-        image.AddComponent<Image>().sprite = sprite;
         image.transform.localScale = new Vector3(1, 1, 1);
         image.GetComponent<RectTransform>().sizeDelta = new Vector2(imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y, imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y);
     }
@@ -60,9 +57,9 @@ public class PostHandler : MonoBehaviour {
     private GameObject clone;
 
     public void Post() {
-        upload.postText = postText.text;
+        PostData.postText = postText.text;
 
-        // Add uploading post to main scene
+        // Add post to main scene
         clone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
         PostElement pe = clone.GetComponent<PostElement>();
         pe.postText = postText.text;
@@ -75,8 +72,8 @@ public class PostHandler : MonoBehaviour {
 
         //Process images here
 
-        for(int i = 0; i < upload.imageNames.Count; i++) {
-            string image = upload.imageNames[i];
+        for(int i = 0; i < PostData.imageNames.Count; i++) {
+            string image = PostData.imageNames[i];
 
             string imgType = System.IO.Path.GetExtension(image);
             string datePatt = @"yyyyMMddHHmmssfff";
@@ -84,27 +81,27 @@ public class PostHandler : MonoBehaviour {
 
             FirebaseHelper.UploadFile(image, imgName, "images");
 
-            upload.imageNames[i] = imgName;
+            PostData.imageNames[i] = imgName;
         }
         //Process images here
 
-        string json = JsonConvert.SerializeObject(upload);
+        string json = JsonConvert.SerializeObject(PostData);
 
-        // Upload
+        // PostData
 
         byte[] postTextbytes = Encoding.ASCII.GetBytes(json);
         const string nextPostID = "0";
         FirebaseHelper.UploadBytes(postTextbytes, "data.json", "posts/user/uid/" + nextPostID);
 
         // Clear
-        upload.imageNames = new List<string>();
+        PostData.imageNames = new List<string>();
 
         StartCoroutine(SiblingUpdate());
         pe.updateAll();
     }
 
     public void CancelPost() {
-        upload.imageNames = new List<string>();
+        PostData.imageNames = new List<string>();
     }
 
     //Update posts on main scene
@@ -113,9 +110,38 @@ public class PostHandler : MonoBehaviour {
         clone.transform.SetSiblingIndex(2);
         transform.parent.gameObject.SetActive(false);
     }
+
+    public async System.Threading.Tasks.Task AddPost(string json) {
+        PostData data = JsonConvert.DeserializeObject<PostData>(json);
+
+        GameObject postClone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
+        PostElement pe = postClone.GetComponent<PostElement>();
+        pe.postText = data.postText;
+
+        foreach(string image in data.imageNames) {
+            string path = Application.persistentDataPath + "cache/images/";
+            Directory.CreateDirectory(path);
+
+            if (!File.Exists($"{path}{image}")) {
+                Debug.Log($"Can't find image in {path}{image}, start downloading from images/{image}");
+                await FirebaseHelper.DownloadFile($"images/{image}", $"{path}{image}");
+            }
+
+            pe.ImageQueue.Add(UIHelper.CreateImageObject($"{path}{image}"));
+        }
+
+        pe.updateAll();
+        StartCoroutine(UpdatePostPostion(postClone));
+    }
+
+    private IEnumerator UpdatePostPostion(GameObject post) {
+        yield return new WaitForSeconds(0.5f);
+        post.transform.SetSiblingIndex(2);
+    }
+
 }
 
-class Upload {
+class PostData {
     public string username;
     public string postText;
     public List<string> imageNames;

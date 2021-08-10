@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class UIHelper {
     public static void PushPrefabToParent(GameObject Prefab, Transform parent, float offset) {
@@ -67,5 +68,13 @@ public class UIHelper {
         prefab_r.position = new Vector2(0, lowest_pos - offset);
         prefab_r.anchoredPosition = new Vector2(0, prefab_r.anchoredPosition.y);
         return prefab;
+    }
+
+    public static GameObject CreateImageObject(string path) {
+        Sprite sprite = IMG2Sprite.LoadNewSprite(path);
+        GameObject image = new GameObject("Image");
+        image.AddComponent<Image>().sprite = sprite;
+        image.transform.localScale = new Vector3(1, 1, 1);
+        return image;
     }
 }
