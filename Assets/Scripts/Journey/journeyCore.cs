@@ -17,6 +17,9 @@ public class journeyCore : MonoBehaviour {
     private UserData user;
     private Challenge challenge;
     private Sprite bgSprite;
+
+    private List<Vector3> pastPos = new List<Vector3>() {new Vector3(0,0,0)}; //supposed to be edge of map but this still works somehow
+
     private void Start() {
         // Load ongoing tasks
         user = UserData.LoadUserData();
@@ -42,10 +45,26 @@ public class journeyCore : MonoBehaviour {
     }
 
     private void CreateButton(Task t) {
-        Vector3 rndPosWithin;
+        Vector3 rndPosWithin = new Vector3();
+        bool check = false; //check if the new position is farther than minDist compared to others
+
+        int minDist = 500; //change this to change minimum distance between nodes. 500 is, from what I've seen, the most consistent. further testing is required
 
         //Random position
-        rndPosWithin = new Vector3(Random.Range(0.2f, 0.8f) * challenge.bgW, Random.Range(-0.8f, -0.2f) * challenge.bgH, 3);
+        while (check != true)
+        {
+            rndPosWithin = new Vector3(Random.Range(0.2f, 0.8f) * challenge.bgW, Random.Range(-0.8f, -0.2f) * challenge.bgH, 3);
+            foreach (Vector3 item in pastPos)
+            {
+                if (Vector3.Distance(rndPosWithin, item) < minDist)
+                {
+                    check = false;
+                    break; //if break triggers then the check = true below will be skipped, so the check will only return true if this is never tripped
+                }
+                check = true;
+            }
+        }
+        pastPos.Add(rndPosWithin);
 
         //rndPosWithin = i.transform.TransformPoint(rndPosWithin * .5f);
 
