@@ -12,7 +12,6 @@ public class CommunityCore : MonoBehaviour {
 
     void Start() {
         DownloadPosts();
-        DownloadImage();
     }
 
     private async void DownloadPosts() {
@@ -20,30 +19,11 @@ public class CommunityCore : MonoBehaviour {
         int id = 0;
         while(!outOfPost) {
             byte[] output = await FirebaseHelper.DownloadBytes($"/posts/test/{id}.json");
-
             string json = Encoding.ASCII.GetString(output);
-            Debug.Log(json);
-
             await postHandler.AddPost(json);
-
             if (output == null)
                 outOfPost = true;
             id++;
         }
-    }
-
-    private async System.Threading.Tasks.Task DownloadPost() {
-        Task<byte[]> task = FirebaseHelper.DownloadBytes("/posts/username/nextID/post.json");
-        byte[] output = await task;
-        string json = Encoding.ASCII.GetString(output);
-        Debug.Log(json);
-    }
-
-    [SerializeField]
-    private Image testSprite;
-
-    private async System.Threading.Tasks.Task DownloadImage() {
-        System.Threading.Tasks.Task task = FirebaseHelper.DownloadFile("/images/20210731055838368.png", "D:/test.png");
-        await task;
     }
 }

@@ -44,11 +44,11 @@ public class journeyCore : MonoBehaviour {
         r.anchorMin = r.anchorMax = new Vector2(0, 1);
     }
 
+    public int ButtonMinDistance = 500; //change this to change minimum distance between nodes. 500 is, from what I've seen, the most consistent. further testing is required
+
     private void CreateButton(Task t) {
         Vector3 rndPosWithin = new Vector3();
         bool check = false; //check if the new position is farther than minDist compared to others
-
-        int minDist = 500; //change this to change minimum distance between nodes. 500 is, from what I've seen, the most consistent. further testing is required
 
         //Random position
         while (check != true)
@@ -56,7 +56,7 @@ public class journeyCore : MonoBehaviour {
             rndPosWithin = new Vector3(Random.Range(0.2f, 0.8f) * challenge.bgW, Random.Range(-0.8f, -0.2f) * challenge.bgH, 3);
             foreach (Vector3 item in pastPos)
             {
-                if (Vector3.Distance(rndPosWithin, item) < minDist)
+                if (Vector3.Distance(rndPosWithin, item) < ButtonMinDistance)
                 {
                     check = false;
                     break; //if break triggers then the check = true below will be skipped, so the check will only return true if this is never tripped

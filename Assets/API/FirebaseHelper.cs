@@ -2,11 +2,15 @@
 using Firebase.Storage;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class FirebaseHelper : MonoBehaviour {
+
+    public static string LocalCacheImagePath = Application.persistentDataPath + "cache/images/";
 
     static FirebaseStorage storage = FirebaseStorage.DefaultInstance;
     public static void UploadFile(string localURL, string saveName, string saveAt) {
@@ -82,5 +86,17 @@ public class FirebaseHelper : MonoBehaviour {
         });
 
         return result;
+    }
+
+    public static async System.Threading.Tasks.Task DownloadCacheImages(List<string> images) {
+        foreach (string image in images) {
+            string path = LocalCacheImagePath;
+            Directory.CreateDirectory(path);
+
+            if (!File.Exists($"{path}{image}")) {
+                Debug.Log($"Can't find image in {path}{image}, start downloading from images/{image}");
+                await FirebaseHelper.DownloadFile($"images/{image}", $"{path}{image}");
+            }
+        }
     }
 }

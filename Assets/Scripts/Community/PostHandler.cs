@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class PostHandler : MonoBehaviour {
 
-    private PostData PostData = new PostData();
+    private PostData postData = new PostData();
 
     // Image Handler
     public void AddImage() { // Open Gallery and add image
@@ -20,7 +20,6 @@ public class PostHandler : MonoBehaviour {
             NativeGallery.GetImagesFromGallery(multi_callback);
             return;
         }
-
         NativeGallery.MediaPickCallback callback = new NativeGallery.MediaPickCallback(LoadImage);
         NativeGallery.GetImageFromGallery(callback);
     }
@@ -32,10 +31,10 @@ public class PostHandler : MonoBehaviour {
         if (path == null)
             return;
 
-        if (PostData.imageNames == null)
-            PostData.imageNames = new List<string>();
+        if (postData.imageNames == null)
+            postData.imageNames = new List<string>();
 
-        PostData.imageNames.Add(path);
+        postData.imageNames.Add(path);
         GameObject image = UIHelper.CreateImageObject(path);
         image.transform.SetParent(imgBoard);
         image.transform.localScale = new Vector3(1, 1, 1);
@@ -57,92 +56,83 @@ public class PostHandler : MonoBehaviour {
     private GameObject clone;
 
     public void Post() {
-        PostData.postText = postText.text;
+        postData.postText = postText.text;
 
         // Add post to main scene
         clone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
         PostElement pe = clone.GetComponent<PostElement>();
-        pe.postText = postText.text;
+        pe.LoadFromData(postData, true);
 
-        if (imgBoard.transform.childCount > 0) {
-            foreach (Transform child in imgBoard.transform)
-                pe.ImageQueue.Add(child.gameObject);
-        }
-
-
-        //Process images here
-
-        for(int i = 0; i < PostData.imageNames.Count; i++) {
-            string image = PostData.imageNames[i];
-
-            string imgType = System.IO.Path.GetExtension(image);
-            string datePatt = @"yyyyMMddHHmmssfff";
-            string imgName = DateTime.UtcNow.ToString(datePatt, CultureInfo.InvariantCulture) + imgType;
-
-            FirebaseHelper.UploadFile(image, imgName, "images");
-
-            PostData.imageNames[i] = imgName;
-        }
-        //Process images here
-
-        string json = JsonConvert.SerializeObject(PostData);
-
-        // PostData
-
-        byte[] postTextbytes = Encoding.ASCII.GetBytes(json);
-        const string nextPostID = "0";
-        FirebaseHelper.UploadBytes(postTextbytes, "data.json", "posts/user/uid/" + nextPostID);
+        PostData.UploadPostData(postData);
 
         // Clear
-        PostData.imageNames = new List<string>();
+        postData.imageNames = new List<string>();
 
         StartCoroutine(SiblingUpdate());
         pe.updateAll();
     }
 
-    public void CancelPost() {
-        PostData.imageNames = new List<string>();
+    private IEnumerator SiblingUpdate() {
+        yield return new WaitForSeconds(1 / 60);
+        clone.transform.SetParent(empty, false);
+        yield return new WaitForSeconds(1 / 60);
+        clone.transform.SetParent(content.transform, false);
+        yield return new WaitForSeconds(1 / 60);
+        clone.transform.SetSiblingIndex(0);
+
+        PostingPanel.SetActive(false);
     }
+
+    public void CancelPost() {
+        postData.imageNames = new List<string>();
+    }
+
+    [SerializeField]
+    GameObject PostingPanel;
 
     //Update posts on main scene
-    private IEnumerator SiblingUpdate() {
-        yield return 0;
-        clone.transform.SetSiblingIndex(2);
-        transform.parent.gameObject.SetActive(false);
-    }
 
+    public Transform empty; 
     public async System.Threading.Tasks.Task AddPost(string json) {
-        PostData data = JsonConvert.DeserializeObject<PostData>(json);
 
+        PostData data = JsonConvert.DeserializeObject<PostData>(json);
         GameObject postClone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
         PostElement pe = postClone.GetComponent<PostElement>();
-        pe.postText = data.postText;
-
-        foreach(string image in data.imageNames) {
-            string path = Application.persistentDataPath + "cache/images/";
-            Directory.CreateDirectory(path);
-
-            if (!File.Exists($"{path}{image}")) {
-                Debug.Log($"Can't find image in {path}{image}, start downloading from images/{image}");
-                await FirebaseHelper.DownloadFile($"images/{image}", $"{path}{image}");
-            }
-
-            pe.ImageQueue.Add(UIHelper.CreateImageObject($"{path}{image}"));
-        }
-
+        pe = await pe.LoadFromData(data);
         pe.updateAll();
         StartCoroutine(UpdatePostPostion(postClone));
     }
 
     private IEnumerator UpdatePostPostion(GameObject post) {
-        yield return new WaitForSeconds(0.5f);
-        post.transform.SetSiblingIndex(2);
+        yield return new WaitForSeconds(1 / 60);
+        post.transform.SetParent(empty, false);
+        yield return new WaitForSeconds(1 / 60);
+        post.transform.SetParent(content.transform, false);
     }
-
 }
 
-class PostData {
+public class PostData {
     public string username;
     public string postText;
     public List<string> imageNames;
+
+    public static void UploadPostData(PostData data) {
+        if (data.imageNames != null)
+            for (int i = 0; i < data.imageNames.Count; i++) {
+                string image = data.imageNames[i];
+
+                string imgType = Path.GetExtension(image);
+                string datePatt = @"yyyyMMddHHmmssfff";
+                string imgName = DateTime.UtcNow.ToString(datePatt, CultureInfo.InvariantCulture) + imgType;
+
+                FirebaseHelper.UploadFile(image, imgName, "images");
+
+                data.imageNames[i] = imgName;
+            }
+
+        string json = JsonConvert.SerializeObject(data);
+        byte[] postTextbytes = Encoding.ASCII.GetBytes(json);
+        const string nextPostID = "0";
+        FirebaseHelper.UploadBytes(postTextbytes, "data.json", "posts/user/uid/" + nextPostID);
+    }
 }

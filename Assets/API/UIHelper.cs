@@ -36,7 +36,7 @@ public class UIHelper {
         prefab_r.anchoredPosition = new Vector2(0, prefab_r.anchoredPosition.y);
     }
     public static GameObject PushAndGetPrefabToParent(GameObject Prefab, Transform parent, float offset) {
-        GameObject prefab = GameObject.Instantiate(Prefab, parent);
+        GameObject prefab = GameObject.Instantiate(Prefab, parent,false);
         RectTransform prefab_r = prefab.GetComponent<RectTransform>();
         RectTransform parent_r = parent.GetComponent<RectTransform>();
         prefab_r.pivot = new Vector2(0.5f, 1); // default pivot
