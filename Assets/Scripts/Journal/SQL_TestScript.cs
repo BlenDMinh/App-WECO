@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using TMPro;
 
 public class SQL_TestScript : MonoBehaviour
@@ -21,26 +18,7 @@ public class SQL_TestScript : MonoBehaviour
     private static SortedDictionary<int, UserData> listUserDataSQL = new SortedDictionary<int, UserData>();
     private void Awake()
     {
-        SqlConnection connection = new SqlConnection(connectionString);
-        connection.Open();
-        Debug.Log("Connection Open!!");
-
-        string commandText = "SELECT * FROM dbo.LEADERBOARD";
-        SqlCommand command = new SqlCommand(commandText, connection);
-
-        SqlDataReader dataReader = command.ExecuteReader();
-        // Each time read one row
-        while (dataReader.Read())
-        {
-            UserData userData = new UserData();
-            userData.userName = dataReader.GetString(0);
-            userData.totalFish = dataReader.GetInt32(1);
-            userData.isNHH = dataReader.GetBoolean(2);
-            listUserDataSQL.Add(numOfUsers, userData);
-            Debug.Log("Added userData " + numOfUsers);
-            numOfUsers++;
-        }
-        Debug.Log("Connect SUCESS");
+        
     }
 
     public GameObject container;
