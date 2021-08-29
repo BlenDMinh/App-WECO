@@ -94,7 +94,6 @@ public class PostHandler : MonoBehaviour {
 
     public Transform empty; 
     public async System.Threading.Tasks.Task AddPost(string json) {
-
         PostData data = JsonConvert.DeserializeObject<PostData>(json);
         GameObject postClone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
         PostElement pe = postClone.GetComponent<PostElement>();
