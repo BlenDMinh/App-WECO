@@ -35,4 +35,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Community.unity
     guid: 9a7ea7fe8a892454394f4f3755510a35
+  - enabled: 1
+    path: Assets/Scenes/CommunitySub/GroupView.unity
+    guid: 703ad53f47cb25046abfa45ef2fa03bc
+  - enabled: 1
+    path: Assets/Scenes/CommunitySub/GroupManager.unity
+    guid: 3e6028c22e3a0364e9ccecc87657c31b
   m_configObjects: {}

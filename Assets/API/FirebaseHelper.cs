@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class FirebaseHelper : MonoBehaviour {
 
     public static string LocalCacheImagePath = Application.persistentDataPath + "cache/images/";
 
-    static FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+    static FirebaseStorage storage = FirebaseStorage.GetInstance(@"gs://wecopia-c8f12.appspot.com");
     public static void UploadFile(string localURL, string saveName, string saveAt) {
         StorageReference fileRef = storage.RootReference.Child(saveAt + "/" + saveName);
         fileRef.PutFileAsync(localURL).ContinueWith((Task<StorageMetadata> task) => {
@@ -88,6 +89,22 @@ public class FirebaseHelper : MonoBehaviour {
         return result;
     }
 
+    public static async Task<string> DownloadString(string URL) {
+
+        if (string.IsNullOrEmpty(URL)) {
+            throw new ArgumentException($"'{nameof(URL)}' cannot be null or empty.", nameof(URL));
+        }
+
+        StorageReference reference = storage.RootReference.Child(URL);
+
+        byte[] bytes = null;
+        // Download to the local filesystem
+        bytes = await DownloadBytes(URL);
+        string result = Encoding.ASCII.GetString(bytes);
+
+        return result;
+    }
+
     public static async System.Threading.Tasks.Task DownloadCacheImages(List<string> images) {
         foreach (string image in images) {
             string path = LocalCacheImagePath;
@@ -99,4 +116,5 @@ public class FirebaseHelper : MonoBehaviour {
             }
         }
     }
+
 }

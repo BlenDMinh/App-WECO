@@ -1,6 +1,9 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GroupManagerCore : MonoBehaviour {
@@ -10,16 +13,14 @@ public class GroupManagerCore : MonoBehaviour {
 
     private List<GameObject> categories = new List<GameObject>();
 
-    void Start() {
+    async void Start() {
         /* todo: Download and Load CommunityUserData when start
         ...
         */
 
         // delete this later
         CommunityUserData user = new CommunityUserData();
-        user.groups.Add(new Group("0", 0));
-        user.groups.Add(new Group("1", 0));
-        user.groups.Add(new Group("2", 0));
+        user.groups.Add(new Group("0000001", 0));
         // delete this later
 
         // Create User's Category GameObject
@@ -28,7 +29,7 @@ public class GroupManagerCore : MonoBehaviour {
 
         // Create User's Groups GameObject
         foreach (Group group in user.groups)
-            CreateGroup(group.id, group.at_catagory);
+            await CreateGroup(group.id, group.catagory_id);
     }
 
     private void CreateCategory(string category_name) {
@@ -37,11 +38,12 @@ public class GroupManagerCore : MonoBehaviour {
         categories.Add(category);
     }
 
-    private void CreateGroup(string group_id, int cid) {
-        // todo: Get group name from id
-        //
+    private async System.Threading.Tasks.Task CreateGroup(string group_id, int cid) {
 
-        string group_name = "Well this is just a decoy";
+        string json = await FirebaseHelper.DownloadString($"groups/{group_id}.json");
+        GroupInfo groupInfo = JsonConvert.DeserializeObject<GroupInfo>(json);
+
+        string group_name = groupInfo.name;
         GameObject category = categories[cid];
 
         GameObject group = Instantiate(group_prefab, category.transform.GetChild(1), false);
@@ -50,5 +52,11 @@ public class GroupManagerCore : MonoBehaviour {
         //
 
         group.transform.GetChild(1).GetComponent<Text>().text = group_name;
+        group.GetComponent<Button>().onClick.AddListener(delegate { EnterGroup(groupInfo); });
+    }
+
+    void EnterGroup(GroupInfo groupInfo) {
+        PlayerPrefs.SetString("GroupInfo", JsonConvert.SerializeObject(groupInfo));
+        SceneManager.LoadSceneAsync("GroupView");
     }
 }
