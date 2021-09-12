@@ -19,12 +19,6 @@ public class ChangeGraph : MonoBehaviour
     	chartContainer.localPosition = chartContainer.localPosition + ChangeVector;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Change()
     {
     	if (times%2 == 0) 

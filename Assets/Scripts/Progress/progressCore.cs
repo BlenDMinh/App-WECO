@@ -41,6 +41,11 @@ public class progressCore : MonoBehaviour {
 
     [Obsolete]
     void Start() {
+        drawGraph();
+        buildChart();
+    }
+
+    public void drawGraph(){
         H = graphContainer.sizeDelta.y;
         W = graphContainer.sizeDelta.x;
         string challengeName = Challenge.LoadCurrentChallenge().challengeName;
@@ -53,7 +58,6 @@ public class progressCore : MonoBehaviour {
                 Debug.Log(i);
             showGraph(list);
         }
-        buildChart();
     }
 
     public class info
@@ -195,12 +199,10 @@ public class progressCore : MonoBehaviour {
         {
             for (int cat = 0; cat < 3; cat++) //xét trên 3 category
             {
-                RectTransform Bar = (RectTransform)bars[bar].GetChild(cat); //
+                RectTransform Bar = (RectTransform)bars[bar].GetChild(cat);
                 info Category = categories[bar][cat];
                 if (Category.percent > 0) 
                 {
-                    // Text texty = Bar.GetComponent<Text>();
-                    // texty.text = Category.str;
                     if (cat == 0)
                     {
                         Bar.SetLeft(0);
