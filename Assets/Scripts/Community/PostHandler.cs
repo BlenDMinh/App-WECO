@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PostHandler : MonoBehaviour {
 
@@ -14,7 +14,6 @@ public class PostHandler : MonoBehaviour {
 
     // Image Handler
     public void AddImage() { // Open Gallery and add image
-
         if (NativeGallery.CanSelectMultipleFilesFromGallery()) {
             NativeGallery.MediaPickMultipleCallback multi_callback = new NativeGallery.MediaPickMultipleCallback(LoadImages);
             NativeGallery.GetImagesFromGallery(multi_callback);
@@ -27,6 +26,9 @@ public class PostHandler : MonoBehaviour {
     [SerializeField]
     private Transform imgBoard; // Image Board in Posting Panel
 
+    [SerializeField]
+    private GameObject cropImage_prefab;
+
     private void LoadImage(string path) {
         if (path == null)
             return;
@@ -35,11 +37,16 @@ public class PostHandler : MonoBehaviour {
             postData.imageNames = new List<string>();
 
         postData.imageNames.Add(path);
-        GameObject image = UIHelper.CreateImageObject(path);
-        image.transform.SetParent(imgBoard);
-        image.transform.localScale = new Vector3(1, 1, 1);
-        image.GetComponent<RectTransform>().sizeDelta = new Vector2(imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y, imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+
+        GameObject cropImage_obj = Instantiate(cropImage_prefab, imgBoard, false);
+        cropImage_obj.GetComponent<RectTransform>().sizeDelta = new Vector2(imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y, imgBoard.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+
+        CropImage cropImage = cropImage_obj.GetComponent<CropImage>();
+        cropImage.image.sprite = IMG2Sprite.LoadNewSprite(path);
+
+        cropImage.GetComponent<CropImage>().FitCanvas();
     }
+
     private void LoadImages(string[] paths) {
         if (paths.Length < 1)
             return;
@@ -48,18 +55,18 @@ public class PostHandler : MonoBehaviour {
     }
 
     [SerializeField]
-    private TMP_Text postText;
+    private Text postText;
 
     [SerializeField]
-    private GameObject post, content;
+    private GameObject postElementPrefab, postContent;
 
     private GameObject clone;
 
     public void Post() {
         postData.postText = postText.text;
 
-        // Add post to main scene
-        clone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
+        // Add postElementPrefab to main scene
+        clone = UIHelper.PushAndGetPrefabToParent(postElementPrefab, postContent.transform, 0);
         PostElement pe = clone.GetComponent<PostElement>();
         pe.LoadFromData(postData, true);
 
@@ -76,7 +83,7 @@ public class PostHandler : MonoBehaviour {
         yield return new WaitForSeconds(1 / 60);
         clone.transform.SetParent(empty, false);
         yield return new WaitForSeconds(1 / 60);
-        clone.transform.SetParent(content.transform, false);
+        clone.transform.SetParent(postContent.transform, false);
         yield return new WaitForSeconds(1 / 60);
         clone.transform.SetSiblingIndex(0);
 
@@ -95,18 +102,18 @@ public class PostHandler : MonoBehaviour {
     public Transform empty; 
     public async System.Threading.Tasks.Task AddPost(string json) {
         PostData data = JsonConvert.DeserializeObject<PostData>(json);
-        GameObject postClone = UIHelper.PushAndGetPrefabToParent(post, content.transform, 0);
+        GameObject postClone = UIHelper.PushAndGetPrefabToParent(postElementPrefab, postContent.transform, 0);
         PostElement pe = postClone.GetComponent<PostElement>();
         pe = await pe.LoadFromData(data);
         pe.updateAll();
         StartCoroutine(UpdatePostPostion(postClone));
     }
 
-    private IEnumerator UpdatePostPostion(GameObject post) {
+    private IEnumerator UpdatePostPostion(GameObject postElementPrefab) {
         yield return new WaitForSeconds(1 / 60);
-        post.transform.SetParent(empty, false);
+        postElementPrefab.transform.SetParent(empty, false);
         yield return new WaitForSeconds(1 / 60);
-        post.transform.SetParent(content.transform, false);
+        postElementPrefab.transform.SetParent(postContent.transform, false);
     }
 }
 
