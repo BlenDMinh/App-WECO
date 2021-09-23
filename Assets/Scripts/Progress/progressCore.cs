@@ -54,8 +54,8 @@ public class progressCore : MonoBehaviour {
         if (record.ContainsKey(challengeName)) {
             List<int> list = ConvertToGraph(record[challengeName]);
             Debug.Log("Graph contain:\n");
-            foreach (int i in list)
-                Debug.Log(i);
+            // foreach (int i in list)
+            //     Debug.Log(i);
             showGraph(list);
         }
     }
