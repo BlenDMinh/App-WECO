@@ -15,7 +15,7 @@ public class GroupViewCore : MonoBehaviour {
     // Start is called before the first frame update
     async void Start() {
         // Debug
-        FirebaseHelper.TestingVoid();
+        //FirebaseHelper.TestingVoid();
         // Debug
 
         groupInfo = JsonConvert.DeserializeObject<GroupInfo>(PlayerPrefs.GetString("GroupInfo"));

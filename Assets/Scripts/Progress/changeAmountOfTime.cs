@@ -9,6 +9,7 @@ public class changeAmountOfTime : MonoBehaviour
     //private Button change_time;
     [SerializeField] private Text title;
     [SerializeField] private GameObject graph_holder;
+    [SerializeField] private progressCore Prog;
     private int counter = 1;
 
     public void destroyChildren(GameObject parent)
@@ -39,7 +40,6 @@ public class changeAmountOfTime : MonoBehaviour
 
     public void change()
     {
-        progressCore Prog = new progressCore();
         counter++; // 1 = day, 2 = month, 3 = year
         
         destroyChildren(graph_holder);
