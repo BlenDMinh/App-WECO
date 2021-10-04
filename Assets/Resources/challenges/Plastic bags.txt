@@ -1,0 +1,56 @@
+{
+		"challengeName":"Plastic bags",
+		"challengeDescription":"gay",
+		"bgW":2779.12317328,
+		"bgH":1300,
+		"btW":110,
+		"btH":110,
+		"tasks": [
+		{"taskDescription":"Use 1 recycling box to keep plastic bags.", "x":110, "y":410,"requirement": {
+			"recycling box":1,
+		}},
+		{"taskDescription":"React to at least 3 posts on facebook page WECO - Environmental Activists.", "x":584, "y":471,"requirement": {
+			"post":3,
+		}},
+		{"taskDescription":"Share at least 1 post on facebook page WECO - Environmental Activists.", "x":683, "y":831,"requirement": {
+			"post":1,
+		}},
+		{"taskDescription":"Fold and arrange at least 5 of your plastic bags at home in a neat way to save some space.", "x":308, "y":1235.5,"requirement": {
+			"plastic bag":5,
+		}},
+		{"taskDescription":"Reuse at least 1 plastic bag.", "x":688.3, "y":1651.6,"requirement": {
+			"plastic bag":1,
+		}},
+		{"taskDescription":"Read the following facts and try your best to remember the key information\n - Plastic bags take up to 1,000 years to decompose.\n - Plastic bags are hard to recycle.\n - Plastic bags reduce food safety risks.\n - The Great Pacific Garbage Patch is located in the North Pacific Gyre off the coast of California and is the largest ocean garbage site in the world. This floating mass of plastic is twice the size of Texas.\n - Plastic accounts for around 10 percent of the total waste we generate.\n - Nearly 70 million barrels of oil are used every year to produce polyester (plastic components) .\n - Although more polyester than nylon is produced each year, nylon requires more energy to manufacture. Nylon is also three times more energy intensive than cotton to produce.\n - Plastics are mostly petrochemicals, made from petroleum, a type of oil. Engineers refine the petroleum which goes through a heating process. It develops ethylene and propylene, which are the chemical building blocks for many plastics. These chemicals are then combined with other chemicals to produce a polymer.\n - Plastics can be pyrolyzed into hydrocarbon fuels, since plastics include hydrogen and carbon. One kilogram of waste plastic produces roughly a liter of hydrocarbon.).\n", "x":1192.1, "y":1434.9,"requirement": {
+			"fact":3,
+		}},
+		{"taskDescription":"Use a cloth bag, paper bag or lunchbox when shopping.", "x":1542, "y":1046.5,"requirement": {
+			"cloth bag/paper bag/lunchbox":1,
+		}},
+		{"taskDescription":"Not use any single plastic bag for today.", "x":1995, "y":709.9,"requirement": {
+			"plastic bag ":0,
+		}},
+		{"taskDescription":"Collect at least 3 nylon bags and put it on WECO hangers in your class.", "x":2537, "y":638,"requirement": {
+			"nylon bag":3,
+			"bags put":3,
+		}},
+		{"taskDescription":"Ask at least 2 of your friends/family membesr not to use plastic bag.", "x":2981.3, "y":886.5,"requirement": {
+			"friend/family member":2,
+		}},
+		{"taskDescription":"Ask at least 2 of your friends/family members to download this app and see how far can they go.", "x":2802.3, "y":1315,"requirement": {
+			"friend/family member":2,
+		}},
+		{"taskDescription":"Invite at least 2 of your friends/family members to like/ share our facebook page: Weco - Environmental Activists.", "x":3372.4, "y":1479,"requirement": {
+			"friend/family member":2,
+		}},
+		{"taskDescription":"Reuse plasic bags at least 5 times.", "x":3844.7, "y":1235.7,"requirement": {
+			"time":5,
+		}},
+		{"taskDescription":"Collect at least 3 nylon bags outside your school area.", "x":4395.4, "y":1074,"requirement": {
+			"nylon bag":3,
+		}},
+		{"taskDescription":"Imagine that someone gives you a plastic bag, write down at least 5 interesting responses to deny in your journal.", "x":4519.41, "y":635.11,"requirement": {
+			"response":5,
+		}},
+	]
+	}

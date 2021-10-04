@@ -1,0 +1,4 @@
+[
+	"Plastic bags",
+	"Coming soon"
+]
