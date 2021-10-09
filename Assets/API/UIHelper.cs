@@ -77,4 +77,33 @@ public class UIHelper {
         image.transform.localScale = new Vector3(1, 1, 1);
         return image;
     }
+
+    public static Image LoadImage(string path) {
+        GameObject image = CreateImageObject(path);
+        Image image_ret = image.GetComponent<Image>();
+        Object.Destroy(image);
+        return image_ret;
+    }
+
+    public static void FitImage(Image image, GameObject canvasObject, string mode) {
+        image.SetNativeSize();
+        float canvas_w = canvasObject.GetComponent<RectTransform>().sizeDelta.x;
+        float canvas_h = canvasObject.GetComponent<RectTransform>().sizeDelta.y;
+        float img_w = image.GetComponent<RectTransform>().sizeDelta.x;
+        float img_h = image.GetComponent<RectTransform>().sizeDelta.y;
+
+        mode = mode.ToLower();
+
+        if (mode == "fill") {
+            if (img_h < img_w)
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(img_w * (canvas_h / img_h), canvas_h);
+            else
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas_w, img_h * (canvas_w / img_w));
+        } else if (mode == "fit") {
+            if (img_h < img_w)
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas_w, img_h * (canvas_w / img_w));
+            else
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(img_w * (canvas_h / img_h), canvas_h);
+        }
+    }
 }

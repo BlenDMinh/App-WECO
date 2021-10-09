@@ -10,7 +10,11 @@ public class CommunityCore : MonoBehaviour {
     [SerializeField]
     private PostHandler postHandler;
 
+    public static CommunityUserData user;
+
     void Start() {
+        user = CommunityUserData.LoadFromCache();
+        Debug.Log(user.name + " " + user.avatar);
         DownloadPosts();
     }
 

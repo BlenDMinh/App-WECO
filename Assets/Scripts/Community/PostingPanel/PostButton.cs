@@ -43,11 +43,8 @@ public class PostButton : MonoBehaviour {
         });
 
         if (imgBoard.transform.childCount > 0) { //there're images
-            // Upload
-
-            // Upload
             foreach(Transform child in imgBoard.transform)
-                pe.ImageQueue.Add(child.gameObject);
+                pe.ImageQueue.Add(child.gameObject.GetComponent<Image>());
         }
         
         StartCoroutine(SiblingUpdate());

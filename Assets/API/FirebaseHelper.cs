@@ -1,4 +1,5 @@
-﻿using Firebase.Extensions;
+﻿using Firebase.Database;
+using Firebase.Extensions;
 using Firebase.Storage;
 using System;
 using System.Collections;
@@ -14,6 +15,20 @@ public class FirebaseHelper : MonoBehaviour {
     public static string LocalCacheImagePath = Application.persistentDataPath + "cache/images/";
 
     static FirebaseStorage storage = FirebaseStorage.GetInstance(@"gs://wecopia-c8f12.appspot.com");
+    static FirebaseDatabase database = FirebaseDatabase.GetInstance(@"https://wecopia-c8f12-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+    public static void TestingVoid() {
+        DatabaseReference reference = database.RootReference.Child("hehe");
+        reference.GetValueAsync().ContinueWithOnMainThread(task => {
+            if (task.IsFaulted) {
+            }
+            else if (task.IsCompleted) {
+                DataSnapshot snapshot = task.Result;
+                Debug.Log(snapshot.ChildrenCount);
+            }
+        });
+    }
+
     public static void UploadFile(string localURL, string saveName, string saveAt) {
         StorageReference fileRef = storage.RootReference.Child(saveAt + "/" + saveName);
         fileRef.PutFileAsync(localURL).ContinueWith((Task<StorageMetadata> task) => {
@@ -70,14 +85,16 @@ public class FirebaseHelper : MonoBehaviour {
             throw new ArgumentException($"'{nameof(URL)}' cannot be null or empty.", nameof(URL));
         }
 
+        Debug.Log($"Downloading {URL}");
+
         StorageReference reference = storage.RootReference.Child(URL);
 
         byte[] result = null;
         // Download to the local filesystem
         await reference.GetBytesAsync(1 * 1024 * 1024).ContinueWithOnMainThread(task => {
             if (task.IsFaulted || task.IsCanceled) {
-                Debug.LogException(task.Exception);
-                // Uh-oh, an error occurred!
+                //Debug.LogException(task.Exception);
+                Debug.Log("Error");
             }
             else {
                 byte[] output = task.Result;
@@ -100,6 +117,10 @@ public class FirebaseHelper : MonoBehaviour {
         byte[] bytes = null;
         // Download to the local filesystem
         bytes = await DownloadBytes(URL);
+
+        if (bytes == null)
+            return "";
+
         string result = Encoding.ASCII.GetString(bytes);
 
         return result;
@@ -116,5 +137,4 @@ public class FirebaseHelper : MonoBehaviour {
             }
         }
     }
-
 }
