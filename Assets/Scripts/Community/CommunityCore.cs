@@ -13,16 +13,17 @@ public class CommunityCore : MonoBehaviour {
     public static CommunityUserData user;
 
     void Start() {
-        user = CommunityUserData.LoadFromCache();
+        user = CommunityUserDataHandler.Instance.user;
         Debug.Log(user.name + " " + user.avatar);
-        DownloadPosts();
+        foreach(string scope in user.post_scope)
+            DownloadPosts(scope);
     }
 
-    private async void DownloadPosts() {
+    private async void DownloadPosts(string path) {
         bool outOfPost = false;
         int id = 0;
         while(!outOfPost) {
-            byte[] output = await FirebaseHelper.DownloadBytes($"/posts/test/{id}.json");
+            byte[] output = await FirebaseHelper.DownloadBytes($"{path}{id}.json");
             string json = Encoding.ASCII.GetString(output);
             await postHandler.AddPost(json);
             if (output == null)

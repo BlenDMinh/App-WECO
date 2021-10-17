@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System;
 using System.Globalization;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class FacebookLoginController : MonoBehaviour {
 
@@ -77,6 +78,7 @@ public class FacebookLoginController : MonoBehaviour {
 
     private void FBGetProfile(IGraphResult result) {
         string json = result.RawResult;
+        Debug.Log(json);
         var dict = Json.Deserialize(json) as Dictionary<string, object>;
         fb_name = dict["name"].ToString();
         // I wish this was Python :(
@@ -85,7 +87,7 @@ public class FacebookLoginController : MonoBehaviour {
     }
 
     private async void GetCommunityProfile(AccessToken token) {
-        string json = await FirebaseHelper.DownloadString("user/FB" + token.UserId);
+        string json = await FirebaseHelper.DownloadString($"CommunityUserData/FB{token.UserId}.json");
         if(string.IsNullOrEmpty(json)) { // => new user
             Debug.Log("Creating new profile");
             FB.API("me?fields=name,picture", HttpMethod.GET, FBGetProfile);
@@ -98,27 +100,38 @@ public class FacebookLoginController : MonoBehaviour {
 
     IEnumerator CreateCommunityProfile() {
         yield return StartCoroutine(DownloadImage(fb_avatar_link));
-        CommunityUserData user = new CommunityUserData();
-        user.name = fb_name;
-        user.avatar = fb_avatar_name;
-        user.uid = "FB" + AccessToken.CurrentAccessToken.UserId;
+        CommunityUserData user = new CommunityUserData("FB" + AccessToken.CurrentAccessToken.UserId, fb_name, fb_avatar_name);
         user.WriteToCache();
         SceneManager.LoadScene("Community");
     }
 
     IEnumerator DownloadImage(string url) {
+        Debug.Log("Downloading User Avatar");
+        Debug.Log(url);
         using (UnityWebRequest www = UnityWebRequest.Get(url)) {
-            yield return www.Send();
+            www.Send();
             if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
             }
             else {
+                while(!www.downloadHandler.isDone) {
+                    Debug.Log(www.downloadProgress.ToString());
+                    yield return null;
+                }
                 string datePatt = @"yyyyMMddHHmmssfff";
                 string file_name = DateTime.UtcNow.ToString(datePatt, CultureInfo.InvariantCulture) + ".jpg";
 
                 string savePath = $"{FirebaseHelper.LocalCacheImagePath}{file_name}";
-                System.IO.File.WriteAllText(savePath, www.downloadHandler.text);
+                Directory.CreateDirectory(Directory.GetParent(savePath).ToString());
+                System.IO.File.WriteAllBytes(savePath, www.downloadHandler.data);
                 fb_avatar_name = file_name;
+
+                while(!File.Exists(savePath)) {
+                    Debug.Log("Saving Avatar to local");
+                }
+                FirebaseHelper.UploadFile(savePath, file_name, "images");
+
+                Debug.Log("Download complete!");
             }
         }
     } 

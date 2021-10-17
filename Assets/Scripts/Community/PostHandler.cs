@@ -63,6 +63,7 @@ public class PostHandler : MonoBehaviour {
     private GameObject clone;
 
     public void Post() {
+        postData.uid = CommunityUserDataHandler.Instance.user.uid;
         postData.postText = postText.text;
 
         // Add postElementPrefab to main scene
@@ -118,7 +119,7 @@ public class PostHandler : MonoBehaviour {
 }
 
 public class PostData {
-    public string username;
+    public string uid;
     public string postText;
     public List<string> imageNames;
 
@@ -138,7 +139,9 @@ public class PostData {
 
         string json = JsonConvert.SerializeObject(data);
         byte[] postTextbytes = Encoding.ASCII.GetBytes(json);
-        const string nextPostID = "0";
-        FirebaseHelper.UploadBytes(postTextbytes, "data.json", "posts/user/uid/" + nextPostID);
+        CommunityUserData user = CommunityUserDataHandler.Instance.user;
+
+        FirebaseHelper.UploadBytes(postTextbytes, $"{user.num_posts}.json", $"posts/user/{user.uid}/");
+        user.num_posts++;
     }
 }
